@@ -1,7 +1,19 @@
-import { Component } from 'react'
+import {Component} from 'react'
 import Cookies from 'js-cookie'
 
-import './index.css'
+import {
+  LoginPage,
+  LoginCard,
+  WebsiteLogo,
+  LoginForm,
+  InputSectionWrapper,
+  LabelText,
+  InputBox,
+  ShowPasswordSection,
+  ShowPasswordLabelText,
+  LoginButton,
+  ErrorMsg,
+} from './styledComponents'
 
 class Login extends Component {
   state = {
@@ -12,21 +24,19 @@ class Login extends Component {
     errorMsg: '',
   }
 
-  onChangeUsername = (event) => {
-    this.setState({ username: event.target.value })
+  onChangeUsername = event => {
+    this.setState({username: event.target.value})
   }
 
-  onChangePassword = (event) => {
-    this.setState({
-      password: event.target.value,
-    })
+  onChangePassword = event => {
+    this.setState({password: event.target.value})
   }
 
-  onSubmitSuccess = (jwtToken) => {
-    Cookies.set('jwt_token', jwtToken, { expires: 30 })
+  onSubmitSuccess = jwtToken => {
+    Cookies.set('jwt_token', jwtToken, {expires: 30})
   }
 
-  onSubmitFailure = (errorMsg) => {
+  onSubmitFailure = errorMsg => {
     this.setState({
       showSubmitError: true,
       errorMsg,
@@ -34,21 +44,23 @@ class Login extends Component {
   }
 
   toggleShowPassword = () => {
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       showPassword: !prevState.showPassword,
     }))
   }
 
-  submitForm = async (event) => {
+  submitForm = async event => {
     event.preventDefault()
 
-    const { username, password } = this.state
-    const userDetails = { username, password }
+    const {username, password} = this.state
+    const userDetails = {username, password}
 
     const apiUrl = 'https://apis.ccbp.in/login'
     const options = {
       method: 'POST',
-      'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(userDetails),
     }
 
@@ -63,67 +75,58 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password, showPassword, showSubmitError, errorMsg } =
+    const {username, password, showPassword, showSubmitError, errorMsg} =
       this.state
 
     return (
-      <div className="login-page">
-        <div className="login-card">
-          <img
+      <LoginPage>
+        <LoginCard>
+          <WebsiteLogo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            className="website-logo"
             alt="website logo"
           />
-          <form className="login-form" onSubmit={this.submitForm}>
-            <div className="input-section-wrapper">
-              <label htmlFor="username" className="label-text">
-                USERNAME
-              </label>
-              <input
+
+          <LoginForm onSubmit={this.submitForm}>
+            <InputSectionWrapper>
+              <LabelText htmlFor="username">USERNAME</LabelText>
+              <InputBox
                 id="username"
-                className="input-box"
                 type="text"
                 value={username}
                 placeholder="Username"
                 onChange={this.onChangeUsername}
               />
-            </div>
+            </InputSectionWrapper>
 
-            <div className="input-section-wrapper">
-              <label htmlFor="password" className="label-text">
-                PASSWORD
-              </label>
-              <input
+            <InputSectionWrapper>
+              <LabelText htmlFor="password">PASSWORD</LabelText>
+              <InputBox
                 id="password"
-                className="input-box"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 placeholder="Password"
                 onChange={this.onChangePassword}
               />
-            </div>
+            </InputSectionWrapper>
 
-            <div className="show-password-section">
+            <ShowPasswordSection>
               <input
                 id="showPassword"
                 type="checkbox"
                 checked={showPassword}
                 onChange={this.toggleShowPassword}
               />
-              <label
-                htmlFor="showPassword"
-                className="show-password-label-text"
-              >
+              <ShowPasswordLabelText htmlFor="showPassword">
                 Show Password
-              </label>
-            </div>
-            <button type="submit" className="login-btn">
-              Login
-            </button>
-            {showSubmitError && <p className="error-msg">{errorMsg}</p>}
-          </form>
-        </div>
-      </div>
+              </ShowPasswordLabelText>
+            </ShowPasswordSection>
+
+            <LoginButton type="submit">Login</LoginButton>
+
+            {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
+          </LoginForm>
+        </LoginCard>
+      </LoginPage>
     )
   }
 }
