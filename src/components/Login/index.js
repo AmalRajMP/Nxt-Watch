@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import {
@@ -67,17 +67,15 @@ class Login extends Component {
       body: JSON.stringify(userDetails),
     }
 
-    try {
-      const response = await fetch(apiUrl, options)
-      const data = await response.json()
+    const response = await fetch(apiUrl, options)
+    const data = await response.json()
 
-      if (response.ok) {
-        this.onSubmitSuccess(data.jwt_token)
-      } else {
-        this.onSubmitFailure(data.error_msg)
-      }
-    } catch (error) {
-      this.onSubmitFailure('Network error. Please try again.')
+    if (response.ok) {
+      console.log(data.jwt_token)
+      this.onSubmitSuccess(data.jwt_token)
+    } else {
+      console.log('Error')
+      this.onSubmitFailure(data.error_msg)
     }
   }
 
@@ -115,6 +113,7 @@ class Login extends Component {
               <InputBox
                 id="password"
                 type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
                 value={password}
                 placeholder="Password"
                 onChange={this.onChangePassword}
@@ -134,6 +133,15 @@ class Login extends Component {
             </ShowPasswordSection>
 
             <LoginButton type="submit">Login</LoginButton>
+            <LoginButton
+              type="button"
+              onClick={() => {
+                Cookies.set('jwt_token', 'guest-token', { expires: 1 })
+                window.location.replace('/')
+              }}
+            >
+              Explore as Guest
+            </LoginButton>
 
             {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
           </LoginForm>
@@ -143,4 +151,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default withRouter(Login)
