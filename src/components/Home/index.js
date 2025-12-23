@@ -22,6 +22,7 @@ import {
 class Home extends Component {
   state = {
     showBanner: true,
+    searchInput: '',
   }
 
   onCloseBanner = () => {
@@ -30,8 +31,12 @@ class Home extends Component {
     })
   }
 
+  onChangeSearchInput = (event) => {
+    this.setState({ searchInput: event.target.value })
+  }
+
   render() {
-    const { showBanner } = this.state
+    const { showBanner, searchInput } = this.state
 
     return (
       <>
@@ -56,7 +61,12 @@ class Home extends Component {
           )}
           <SearchBarWrapper>
             <SearchContainer>
-              <SearchInput type="search" placeholder="Search" />
+              <SearchInput
+                type="search"
+                value={searchInput}
+                placeholder="Search"
+                onChange={this.onChangeSearchInput}
+              />
               <SearchButton type="button">
                 <BsSearch />
               </SearchButton>
