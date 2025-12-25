@@ -25,6 +25,7 @@ class Home extends Component {
     searchInput: '',
   }
 
+ 
   onCloseBanner = () => {
     this.setState({
       showBanner: false,

@@ -61,9 +61,6 @@ class Login extends Component {
     const apiUrl = 'https://apis.ccbp.in/login'
     const options = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(userDetails),
     }
 
@@ -133,16 +130,6 @@ class Login extends Component {
             </ShowPasswordSection>
 
             <LoginButton type="submit">Login</LoginButton>
-            <LoginButton
-              type="button"
-              onClick={() => {
-                Cookies.set('jwt_token', 'guest-token', { expires: 1 })
-                window.location.replace('/')
-              }}
-            >
-              Explore as Guest
-            </LoginButton>
-
             {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
           </LoginForm>
         </LoginCard>
