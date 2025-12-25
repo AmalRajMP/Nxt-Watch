@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import Cookies from 'js-cookie'
 
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
@@ -19,13 +20,68 @@ import {
   SearchButton,
 } from './styledComponents'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
 class Home extends Component {
   state = {
     showBanner: true,
     searchInput: '',
+    apiStatus: apiStatusConstants.initial,
+    videosList: [],
   }
 
- 
+  componentDidMount() {
+    this.getHomeVideos()
+  }
+
+  getHomeVideos = async () => {
+    this.setState({ apiStatus: apiStatusConstants.inProgress })
+
+    const { searchInput } = this.state
+
+    const jwtToken = Cookies.get('jwt_token')
+    if (!jwtToken) {
+      return
+    }
+
+    const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }
+
+    const response = await fetch(apiUrl, options)
+
+    if (response.ok) {
+      const data = await response.json()
+      const formattedData = data.videos.map((eachItem) => ({
+        id: eachItem.id,
+        title: eachItem.title,
+        thumbnailUrl: eachItem.thumbnail_url,
+        channel: {
+          name: eachItem.channel.name,
+          profileImageUrl: eachItem.channel.profile_image_url,
+        },
+        viewCount: eachItem.view_count,
+        publishedAt: eachItem.published_at,
+      }))
+
+      this.setState({
+        apiStatus: apiStatusConstants.success,
+        videosList: formattedData,
+      })
+    } else {
+      this.setState({ apiStatus: apiStatusConstants.failure })
+    }
+  }
+
   onCloseBanner = () => {
     this.setState({
       showBanner: false,
@@ -36,8 +92,13 @@ class Home extends Component {
     this.setState({ searchInput: event.target.value })
   }
 
+  onSearchVideo = () => {
+    this.getHomeVideos()
+  }
+
   render() {
-    const { showBanner, searchInput } = this.state
+    const { showBanner, searchInput, videosList } = this.state
+    console.log(videosList)
 
     return (
       <>
@@ -68,7 +129,7 @@ class Home extends Component {
                 placeholder="Search"
                 onChange={this.onChangeSearchInput}
               />
-              <SearchButton type="button">
+              <SearchButton type="button" onClick={this.onSearchVideo}>
                 <BsSearch />
               </SearchButton>
             </SearchContainer>
