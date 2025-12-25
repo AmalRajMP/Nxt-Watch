@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const HomePage = styled.div`
   min-height: 100vh;
-  padding: 24px;
-  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
 `
 
 export const BannerSection = styled.div`
@@ -56,11 +56,18 @@ export const CloseButton = styled.button`
   right: 16px;
 `
 
+export const VideosSection = styled.div`
+  background-color: #f9f9f9;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`
+
 export const SearchBarWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin: 24px 0;
+  padding: 20px;
 
   @media screen and (max-width: 576px) {
     justify-content: center;
@@ -75,7 +82,6 @@ export const SearchContainer = styled.div`
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   overflow: hidden;
-  margin: 24px 0;
 `
 
 export const SearchInput = styled.input`
@@ -98,6 +104,7 @@ export const SearchButton = styled.button`
   border-left: 1px solid #cbd5e1;
   padding: 8px 14px;
   cursor: pointer;
+  outline: none;
 
   display: flex;
   align-items: center;
@@ -106,4 +113,15 @@ export const SearchButton = styled.button`
   &:hover {
     background-color: #e2e8f0;
   }
+`
+export const VideosList = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  align-items: flex-start;
 `

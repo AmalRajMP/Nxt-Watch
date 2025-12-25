@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
 
 import Header from '../Header'
+import HomeVideoItem from '../HomeVideoItem'
 
 import {
   HomePage,
@@ -14,10 +15,12 @@ import {
   BannerText,
   BannerButton,
   CloseButton,
+  VideosSection,
   SearchBarWrapper,
   SearchContainer,
   SearchInput,
   SearchButton,
+  VideosList,
 } from './styledComponents'
 
 const apiStatusConstants = {
@@ -121,19 +124,26 @@ class Home extends Component {
               </CloseButton>
             </BannerSection>
           )}
-          <SearchBarWrapper>
-            <SearchContainer>
-              <SearchInput
-                type="search"
-                value={searchInput}
-                placeholder="Search"
-                onChange={this.onChangeSearchInput}
-              />
-              <SearchButton type="button" onClick={this.onSearchVideo}>
-                <BsSearch />
-              </SearchButton>
-            </SearchContainer>
-          </SearchBarWrapper>
+          <VideosSection>
+            <SearchBarWrapper>
+              <SearchContainer>
+                <SearchInput
+                  type="search"
+                  value={searchInput}
+                  placeholder="Search"
+                  onChange={this.onChangeSearchInput}
+                />
+                <SearchButton type="button" onClick={this.onSearchVideo}>
+                  <BsSearch />
+                </SearchButton>
+              </SearchContainer>
+            </SearchBarWrapper>
+            <VideosList>
+              {videosList.map((eachItem) => (
+                <HomeVideoItem key={eachItem.id} videoDetails={eachItem} />
+              ))}
+            </VideosList>
+          </VideosSection>
         </HomePage>
       </>
     )
