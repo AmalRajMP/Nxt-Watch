@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import Cookies from 'js-cookie'
 
+import { ThreeDots } from 'react-loader-spinner'
+
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
 
@@ -20,7 +22,17 @@ import {
   SearchContainer,
   SearchInput,
   SearchButton,
+  LoaderContainer,
   VideosList,
+  NoSearchResultsContainer,
+  NoSearchResultsImage,
+  NoSearchResultsHeading,
+  NoSearchResultsDescription,
+  FailureContainer,
+  FailureImage,
+  FailureHeading,
+  FailureDescription,
+  RetryButton,
 } from './styledComponents'
 
 const apiStatusConstants = {
@@ -99,9 +111,72 @@ class Home extends Component {
     this.getHomeVideos()
   }
 
+  renderLoadingView = () => (
+    <LoaderContainer data-testid="loader">
+      <ThreeDots type="ThreeDots" color="#3b82f6" height={50} width={50} />
+    </LoaderContainer>
+  )
+
+  renderNoSearchResultsView = () => (
+    <NoSearchResultsContainer>
+      <NoSearchResultsImage
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+        alt="no videos"
+      />
+      <NoSearchResultsHeading>No Search results found</NoSearchResultsHeading>
+      <NoSearchResultsDescription>
+        Try different key words or remove search filter
+      </NoSearchResultsDescription>
+      <RetryButton onClick={this.getHomeVideos}>Retry</RetryButton>
+    </NoSearchResultsContainer>
+  )
+
+  renderSuccessView = () => {
+    const { videosList } = this.state
+    return videosList.length === 0 ? (
+      this.renderNoSearchResultsView()
+    ) : (
+      <VideosList>
+        {videosList.map((eachItem) => (
+          <HomeVideoItem key={eachItem.id} videoDetails={eachItem} />
+        ))}
+      </VideosList>
+    )
+  }
+
+  renderFailureView = () => (
+    <FailureContainer>
+      <FailureImage
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
+      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
+      <FailureDescription>
+        We are having some trouble to complete your request.
+        <br />
+        Please try again.
+      </FailureDescription>
+      <RetryButton onClick={this.getHomeVideos}>Retry</RetryButton>
+    </FailureContainer>
+  )
+
+  renderVideosList = () => {
+    const { apiStatus } = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      case apiStatusConstants.success:
+        return this.renderSuccessView()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      default:
+        return null
+    }
+  }
+
   render() {
-    const { showBanner, searchInput, videosList } = this.state
-    console.log(videosList)
+    const { showBanner, searchInput } = this.state
 
     return (
       <>
@@ -138,11 +213,7 @@ class Home extends Component {
                 </SearchButton>
               </SearchContainer>
             </SearchBarWrapper>
-            <VideosList>
-              {videosList.map((eachItem) => (
-                <HomeVideoItem key={eachItem.id} videoDetails={eachItem} />
-              ))}
-            </VideosList>
+            {this.renderVideosList()}
           </VideosSection>
         </HomePage>
       </>
