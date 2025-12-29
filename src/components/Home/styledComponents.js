@@ -3,7 +3,21 @@ import styled from 'styled-components'
 export const HomePage = styled.div`
   min-height: 100vh;
   display: flex;
+`
+export const SidebarContainer = styled.div`
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    width: 240px;
+    flex-shrink: 0;
+  }
+`
+
+export const ContentContainer = styled.div`
+  display: flex;
   flex-direction: column;
+  flex-grow: 1;
 `
 
 export const BannerSection = styled.div`

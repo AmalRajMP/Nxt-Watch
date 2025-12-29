@@ -8,9 +8,12 @@ import { BsSearch } from 'react-icons/bs'
 
 import Header from '../Header'
 import HomeVideoItem from '../HomeVideoItem'
+import Sidebar from '../Sidebar'
 
 import {
   HomePage,
+  SidebarContainer,
+  ContentContainer,
   BannerSection,
   BannerDetails,
   WebsiteLogo,
@@ -182,39 +185,44 @@ class Home extends Component {
       <>
         <Header />
         <HomePage>
-          {showBanner && (
-            <BannerSection>
-              <BannerDetails>
-                <WebsiteLogo
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                  alt="nxt watch logo"
-                />
-                <BannerText>
-                  Buy Nxt Watch Premium prepaid plans with UPI
-                </BannerText>
-                <BannerButton type="button">GET IT NOW</BannerButton>
-              </BannerDetails>
-              <CloseButton data-testid="close" onClick={this.onCloseBanner}>
-                <AiOutlineClose size={20} />
-              </CloseButton>
-            </BannerSection>
-          )}
-          <VideosSection>
-            <SearchBarWrapper>
-              <SearchContainer>
-                <SearchInput
-                  type="search"
-                  value={searchInput}
-                  placeholder="Search"
-                  onChange={this.onChangeSearchInput}
-                />
-                <SearchButton type="button" onClick={this.onSearchVideo}>
-                  <BsSearch />
-                </SearchButton>
-              </SearchContainer>
-            </SearchBarWrapper>
-            {this.renderVideosList()}
-          </VideosSection>
+          <SidebarContainer>
+            <Sidebar />
+          </SidebarContainer>
+          <ContentContainer>
+            {showBanner && (
+              <BannerSection>
+                <BannerDetails>
+                  <WebsiteLogo
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                    alt="nxt watch logo"
+                  />
+                  <BannerText>
+                    Buy Nxt Watch Premium prepaid plans with UPI
+                  </BannerText>
+                  <BannerButton type="button">GET IT NOW</BannerButton>
+                </BannerDetails>
+                <CloseButton data-testid="close" onClick={this.onCloseBanner}>
+                  <AiOutlineClose size={20} />
+                </CloseButton>
+              </BannerSection>
+            )}
+            <VideosSection>
+              <SearchBarWrapper>
+                <SearchContainer>
+                  <SearchInput
+                    type="search"
+                    value={searchInput}
+                    placeholder="Search"
+                    onChange={this.onChangeSearchInput}
+                  />
+                  <SearchButton type="button" onClick={this.onSearchVideo}>
+                    <BsSearch />
+                  </SearchButton>
+                </SearchContainer>
+              </SearchBarWrapper>
+              {this.renderVideosList()}
+            </VideosSection>
+          </ContentContainer>
         </HomePage>
       </>
     )
