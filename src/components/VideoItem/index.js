@@ -1,5 +1,5 @@
 import {
-  VideoItem,
+  VideoContainer,
   Thumbnail,
   VideoDetails,
   ChannelLogo,
@@ -8,12 +8,12 @@ import {
   MetaData,
 } from './styledComponents'
 
-const HomeVideoItem = (props) => {
+const VideoItem = (props) => {
   const { videoDetails } = props
   const { title, thumbnailUrl, channel, viewCount, publishedAt } = videoDetails
 
   return (
-    <VideoItem>
+    <VideoContainer>
       <Thumbnail src={thumbnailUrl} alt="video thumbnail" />
 
       <VideoDetails>
@@ -26,8 +26,8 @@ const HomeVideoItem = (props) => {
           </MetaData>
         </TextContainer>
       </VideoDetails>
-    </VideoItem>
+    </VideoContainer>
   )
 }
 
-export default HomeVideoItem
+export default VideoItem

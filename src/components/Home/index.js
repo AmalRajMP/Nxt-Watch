@@ -7,7 +7,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
 
 import Header from '../Header'
-import HomeVideoItem from '../HomeVideoItem'
+import VideoItem from '../VideoItem'
 import Sidebar from '../Sidebar'
 
 import {
@@ -141,7 +141,7 @@ class Home extends Component {
     ) : (
       <VideosList>
         {videosList.map((eachItem) => (
-          <HomeVideoItem key={eachItem.id} videoDetails={eachItem} />
+          <VideoItem key={eachItem.id} videoDetails={eachItem} />
         ))}
       </VideosList>
     )

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const VideoItem = styled.li`
+export const VideoContainer = styled.li`
   width: 100%;
   list-style-type: none;
 `

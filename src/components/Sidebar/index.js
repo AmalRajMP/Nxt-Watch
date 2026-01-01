@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import { AiFillHome } from 'react-icons/ai'
 import { HiFire } from 'react-icons/hi'
@@ -45,16 +46,10 @@ export const sidebarItemsList = [
 ]
 
 class Sidebar extends Component {
-  state = {
-    activeId: sidebarItemsList[0].id,
-  }
-
-  onClickSidebarLink = (id) => {
-    this.setState({ activeId: id })
-  }
-
   render() {
-    const { activeId } = this.state
+    const { location } = this.props
+    const currentPath = location.pathname
+
     return (
       <SidebarContainer>
         <SidebarItemsList>
@@ -62,8 +57,7 @@ class Sidebar extends Component {
             <li key={eachItem.id}>
               <SidebarItem
                 linkDetails={eachItem}
-                isActive={activeId === eachItem.id}
-                onClickSidebarLink={this.onClickSidebarLink}
+                isActive={currentPath === eachItem.path}
               />
             </li>
           ))}
@@ -95,4 +89,4 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar
+export default withRouter(Sidebar)
