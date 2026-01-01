@@ -7,21 +7,9 @@ export const VideoItem = styled.li`
 
 export const Thumbnail = styled.img`
   width: 100%;
-  height: 180px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 8px;
-
-  @media screen and (max-width: 576px) {
-    height: 160px;
-  }
-
-  @media screen and (min-width: 768px) {
-    height: 200px;
-  }
-
-  @media screen and (min-width: 992px) {
-    height: 220px;
-  }
 `
 
 export const VideoDetails = styled.div`

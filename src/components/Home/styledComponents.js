@@ -18,10 +18,12 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  margin-top: 64px;
 `
 
 export const BannerSection = styled.div`
-  background-image: url("https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png");
+  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
   background-size: cover;
   padding: 24px;
   display: flex;
@@ -91,8 +93,8 @@ export const SearchBarWrapper = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 420px; 
-  max-width: 100%;  
+  width: 420px;
+  max-width: 100%;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   overflow: hidden;
@@ -112,7 +114,7 @@ export const SearchInput = styled.input`
 `
 
 export const SearchButton = styled.button`
-  width: 60px;  
+  width: 60px;
   background-color: #f1f5f9;
   border: none;
   border-left: 1px solid #cbd5e1;

@@ -7,6 +7,13 @@ export const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  background-color: #ffffff; 
 `
 export const WebsiteLogo = styled.img`
   height: 30px;

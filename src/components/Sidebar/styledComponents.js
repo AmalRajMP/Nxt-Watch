@@ -6,6 +6,9 @@ export const SidebarContainer = styled.aside`
   background-color: #ffffff;
   border-right: 1px solid #e2e8f0;
 
+  position: fixed;
+  top: 64px;
+
   display: flex;
   flex-direction: column;
 `
