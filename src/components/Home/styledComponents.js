@@ -21,7 +21,7 @@ export const ContentContainer = styled.div`
 `
 
 export const BannerSection = styled.div`
-  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
+  background-image: url("https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png");
   background-size: cover;
   padding: 24px;
   display: flex;
@@ -91,8 +91,8 @@ export const SearchBarWrapper = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 420px;
-  max-width: 100%;
+  width: 420px; 
+  max-width: 100%;  
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   overflow: hidden;
@@ -112,7 +112,7 @@ export const SearchInput = styled.input`
 `
 
 export const SearchButton = styled.button`
-  width: 60px;
+  width: 60px;  
   background-color: #f1f5f9;
   border: none;
   border-left: 1px solid #cbd5e1;
@@ -137,15 +137,24 @@ export const LoaderContainer = styled.div`
 
 export const VideosList = styled.ul`
   list-style-type: none;
-  padding-left: 0;
-  margin: 0;
+  padding: 0;
+  margin: 24px 0 0 0;
+  padding: 0 20px;
 
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  gap: 24px;
 
-  align-items: flex-start;
+  grid-template-columns: 1fr;
+
+  @media screen and (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `
+
 export const FailureContainer = styled.div`
   min-height: 70vh;
   display: flex;
