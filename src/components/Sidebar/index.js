@@ -7,7 +7,15 @@ import { MdPlaylistAdd } from 'react-icons/md'
 
 import SidebarItem from '../SidebarItem'
 
-import { SidebarContainer, SidebarItemsList } from './styledComponents'
+import {
+  SidebarContainer,
+  SidebarItemsList,
+  ContactUsContainer,
+  ContactTitle,
+  SocialIconsContainer,
+  SocialIcon,
+  ContactDescription,
+} from './styledComponents'
 
 export const sidebarItemsList = [
   {
@@ -60,6 +68,28 @@ class Sidebar extends Component {
             </li>
           ))}
         </SidebarItemsList>
+        <ContactUsContainer>
+          <ContactTitle>CONTACT US</ContactTitle>
+
+          <SocialIconsContainer>
+            <SocialIcon
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+              alt="facebook logo"
+            />
+            <SocialIcon
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+              alt="twitter logo"
+            />
+            <SocialIcon
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+              alt="linked in logo"
+            />
+          </SocialIconsContainer>
+
+          <ContactDescription>
+            Enjoy! Now to see your channels and recommendations!
+          </ContactDescription>
+        </ContactUsContainer>
       </SidebarContainer>
     )
   }
