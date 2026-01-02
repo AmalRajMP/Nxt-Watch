@@ -60,4 +60,8 @@ export const VideosList = styled.ul`
     /* Tablet: 3 cards */
     grid-template-columns: repeat(3, 1fr);
   }
+
+  @media screen and (min-width: 992px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `
