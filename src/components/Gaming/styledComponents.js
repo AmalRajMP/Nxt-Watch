@@ -15,6 +15,7 @@ export const SidebarContainer = styled.div`
 `
 
 export const ContentContainer = styled.div`
+  width: calc(100vw - 240px);
   flex-grow: 1;
   margin-top: 64px;
   display: flex;
@@ -39,4 +40,24 @@ export const GamingTitle = styled.h1`
   font-family: 'Roboto';
   font-size: 24px;
   margin: 0;
+`
+export const VideosSection = styled.div`
+  background-color: #f9f9f9;
+  flex-grow: 1;
+`
+
+export const VideosList = styled.ul`
+  list-style-type: none;
+  padding: 20px;
+
+  display: grid;
+  gap: 24px;
+
+  /* Mobile: 2 cards */
+  grid-template-columns: repeat(2, 1fr);
+
+  @media screen and (min-width: 576px) {
+    /* Tablet: 3 cards */
+    grid-template-columns: repeat(3, 1fr);
+  }
 `
