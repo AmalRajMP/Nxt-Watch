@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 export const VideoDetailsPage = styled.div`
-  min-height: 100vh;
   display: flex;
+  width: 100%;
+  padding-top: 64px;
 `
 
 export const SidebarContainer = styled.div`
@@ -17,7 +18,6 @@ export const SidebarContainer = styled.div`
 
 export const ContentContainer = styled.div`
   flex-grow: 1;
-  margin-top: 64px;
   padding: 16px;
 
   @media screen and (min-width: 768px) {
@@ -26,7 +26,9 @@ export const ContentContainer = styled.div`
 `
 
 export const VideoPlayerContainer = styled.div`
+  position: relative;
   width: 100%;
-  background-color: #000;
-  height: 360px;
+  padding-top: 56.25%;
+  background-color: black;
+  z-index: 1;
 `

@@ -13,7 +13,7 @@ export const Navbar = styled.nav`
   left: 0;
   z-index: 1000;
 
-  background-color: #ffffff; 
+  background-color: #ffffff;
 `
 export const WebsiteLogo = styled.img`
   height: 30px;

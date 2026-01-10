@@ -17,11 +17,7 @@ const VideoItem = (props) => {
 
   return (
     <VideoContainer>
-      <Link
-        to={`/videos/${id}`}
-        onClick={() => console.log('Video item clicked', id)}
-        style={{ textDecoration: 'none' }}
-      >
+      <Link to={`/videos/${id}`} style={{ textDecoration: 'none' }}>
         <Thumbnail src={thumbnailUrl} alt="video thumbnail" />
 
         <VideoDetails>
