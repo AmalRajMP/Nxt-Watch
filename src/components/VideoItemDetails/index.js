@@ -28,6 +28,8 @@ import {
 class VideoItemDetails extends Component {
   state = {
     videoDetails: {},
+    isLiked: false,
+    isDisLiked: false,
   }
 
   componentDidMount() {
@@ -70,8 +72,22 @@ class VideoItemDetails extends Component {
     }
   }
 
+  handleLike = () => {
+    this.setState({
+      isLiked: true,
+      isDisLiked: false,
+    })
+  }
+
+  handleDisLike = () => {
+    this.setState({
+      isDisLiked: true,
+      isLiked: false,
+    })
+  }
+
   render() {
-    const { videoDetails } = this.state
+    const { videoDetails, isLiked, isDisLiked } = this.state
     const {
       title,
       videoUrl,
@@ -110,13 +126,21 @@ class VideoItemDetails extends Component {
                 </p>
 
                 <ActionButtons>
-                  <ActionButton>
+                  <ActionButton
+                    type="button"
+                    isLiked={isLiked}
+                    onClick={this.handleLike}
+                  >
                     <BiLike size={18} /> Like
                   </ActionButton>
-                  <ActionButton>
+                  <ActionButton
+                    type="button"
+                    isDisLiked={isDisLiked}
+                    onClick={this.handleDisLike}
+                  >
                     <BiDislike size={18} /> Dislike
                   </ActionButton>
-                  <ActionButton>
+                  <ActionButton type="button">
                     <RiPlayListAddLine size={18} /> Save
                   </ActionButton>
                 </ActionButtons>

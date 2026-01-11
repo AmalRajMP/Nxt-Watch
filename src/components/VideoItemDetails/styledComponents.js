@@ -115,13 +115,10 @@ export const ActionButton = styled.button`
   gap: 6px;
   background: transparent;
   border: none;
-  color: #475569;
+  color: ${(props) =>
+    props.isLiked || props.isDisLiked ? '#4f46e5' : '#475569'};
   font-size: 14px;
   cursor: pointer;
-
-  &:hover {
-    color: #2563eb;
-  }
 `
 
 /* Channel info */
