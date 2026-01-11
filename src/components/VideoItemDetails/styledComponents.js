@@ -1,11 +1,14 @@
 import styled from 'styled-components'
 
+/* Page layout */
 export const VideoDetailsPage = styled.div`
   display: flex;
   width: 100%;
   padding-top: 64px;
+  background-color: #f9f9f9;
 `
 
+/* Sidebar */
 export const SidebarContainer = styled.div`
   display: none;
 
@@ -16,54 +19,94 @@ export const SidebarContainer = styled.div`
   }
 `
 
+/* Main content */
 export const ContentContainer = styled.div`
   flex-grow: 1;
+  width: 100%;
 
   @media screen and (min-width: 768px) {
     padding: 24px;
   }
+
+  @media screen and (min-width: 1024px) {
+    padding: 32px 48px;
+  }
 `
 
+/* Video player */
 export const VideoPlayerContainer = styled.div`
   position: relative;
   width: 100%;
   padding-top: 56.25%;
   background-color: black;
   z-index: 1;
+  border-radius: 0;
+
+  @media screen and (min-width: 768px) {
+    border-radius: 8px;
+    overflow: hidden;
+  }
 `
 
+/* Video details section */
 export const VideoDetailsContainer = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 18px 14px;
+
+  @media screen and (min-width: 768px) {
+    padding: 20px 0;
+    gap: 22px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 900px;
+    gap: 24px;
+  }
 `
+
 export const VideoTitle = styled.p`
   font-size: 16px;
   font-weight: 500;
   color: #1e293b;
-
   line-height: 1.4;
+
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
 `
 
-/* Views + published date row */
+/* Views + date */
 export const VideoStatsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   font-size: 13px;
   color: #64748b;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+  }
 `
 
-/* Like / Dislike / Save buttons */
 export const ActionButtons = styled.div`
   display: flex;
   gap: 18px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #e2e8f0;
-  margin-bottom: 16px;
+
+  @media screen and (min-width: 768px) {
+    gap: 24px;
+  }
 `
 
 export const ActionButton = styled.button`
@@ -75,19 +118,32 @@ export const ActionButton = styled.button`
   color: #475569;
   font-size: 14px;
   cursor: pointer;
+
+  &:hover {
+    color: #2563eb;
+  }
 `
 
-/* Channel info section */
+/* Channel info */
 export const ChannelRow = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 12px;
+
+  @media screen and (min-width: 768px) {
+    gap: 16px;
+  }
 `
 
 export const ChannelImage = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
+
+  @media screen and (min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
 `
 
 export const ChannelDetails = styled.div`
@@ -100,6 +156,10 @@ export const ChannelName = styled.p`
   font-weight: 500;
   color: #1e293b;
   margin-bottom: 4px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 15px;
+  }
 `
 
 export const SubscribersText = styled.p`
@@ -111,4 +171,9 @@ export const VideoDescription = styled.p`
   font-size: 13px;
   color: #475569;
   line-height: 1.6;
+
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+    max-width: 900px;
+  }
 `
