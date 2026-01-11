@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import Cookies from 'js-cookie'
 import ReactPlayer from 'react-player'
+import { BiLike, BiDislike } from 'react-icons/bi'
+import { RiPlayListAddLine } from 'react-icons/ri'
 
 import Header from '../Header'
 import Sidebar from '../Sidebar'
@@ -10,6 +12,17 @@ import {
   SidebarContainer,
   ContentContainer,
   VideoPlayerContainer,
+  VideoDetailsContainer,
+  VideoTitle,
+  VideoStatsContainer,
+  ActionButtons,
+  ActionButton,
+  ChannelRow,
+  ChannelImage,
+  ChannelDetails,
+  ChannelName,
+  SubscribersText,
+  VideoDescription,
 } from './styledComponents'
 
 class VideoItemDetails extends Component {
@@ -23,14 +36,12 @@ class VideoItemDetails extends Component {
 
   getVideoDetails = async () => {
     const { match } = this.props
-    const { params } = match
-    const { id } = params
+    const { id } = match.params
 
     const jwtToken = Cookies.get('jwt_token')
-
     const apiUrl = `https://apis.ccbp.in/videos/${id}`
+
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
@@ -39,19 +50,20 @@ class VideoItemDetails extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok) {
       const data = await response.json()
-      const videoDetails = data.video_details
+      const video = data.video_details
 
       const formattedData = {
-        id: videoDetails.id,
-        title: videoDetails.title,
-        videoUrl: videoDetails.video_url,
-        thumbnailUrl: videoDetails.thumbnail_url,
+        id: video.id,
+        title: video.title,
+        videoUrl: video.video_url,
+        viewCount: video.view_count,
+        publishedAt: video.published_at,
+        description: video.description,
         channel: {
-          name: videoDetails.channel.name,
-          profileImageUrl: videoDetails.channel.profile_image_url,
+          name: video.channel.name,
+          profileImageUrl: video.channel.profile_image_url,
+          subscriberCount: video.channel.subscriber_count,
         },
-        viewCount: videoDetails.view_count,
-        publishedAt: videoDetails.published_at,
       }
 
       this.setState({ videoDetails: formattedData })
@@ -60,8 +72,15 @@ class VideoItemDetails extends Component {
 
   render() {
     const { videoDetails } = this.state
-    const { videoUrl } = videoDetails
-    console.log(videoUrl)
+    const {
+      title,
+      videoUrl,
+      viewCount,
+      publishedAt,
+      description,
+      channel = {},
+    } = videoDetails
+
     return (
       <>
         <Header />
@@ -82,6 +101,39 @@ class VideoItemDetails extends Component {
                 />
               )}
             </VideoPlayerContainer>
+            <VideoDetailsContainer>
+              <VideoTitle>{title}</VideoTitle>
+              <VideoStatsContainer>
+                <p>
+                  {viewCount} views • {publishedAt}
+                </p>
+
+                <ActionButtons>
+                  <ActionButton>
+                    <BiLike size={18} /> Like
+                  </ActionButton>
+                  <ActionButton>
+                    <BiDislike size={18} /> Dislike
+                  </ActionButton>
+                  <ActionButton>
+                    <RiPlayListAddLine size={18} /> Save
+                  </ActionButton>
+                </ActionButtons>
+              </VideoStatsContainer>
+              <ChannelRow>
+                <ChannelImage
+                  src={channel.profileImageUrl}
+                  alt="channel logo"
+                />
+                <ChannelDetails>
+                  <ChannelName>{channel.name}</ChannelName>
+                  <SubscribersText>
+                    {channel.subscriberCount} subscribers
+                  </SubscribersText>
+                </ChannelDetails>
+              </ChannelRow>
+              <VideoDescription>{description}</VideoDescription>{' '}
+            </VideoDetailsContainer>
           </ContentContainer>
         </VideoDetailsPage>
       </>
