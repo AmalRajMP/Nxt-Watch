@@ -19,6 +19,14 @@ export const SidebarContainer = styled.div`
   }
 `
 
+export const LoaderContainer = styled.div`
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 /* Main content */
 export const ContentContainer = styled.div`
   flex-grow: 1;

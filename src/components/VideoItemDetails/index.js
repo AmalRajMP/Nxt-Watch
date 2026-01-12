@@ -4,12 +4,15 @@ import ReactPlayer from 'react-player'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { RiPlayListAddLine } from 'react-icons/ri'
 
+import Loader from 'react-loader-spinner'
+
 import Header from '../Header'
 import Sidebar from '../Sidebar'
 
 import {
   VideoDetailsPage,
   SidebarContainer,
+  LoaderContainer,
   ContentContainer,
   VideoPlayerContainer,
   VideoDetailsContainer,
@@ -25,8 +28,16 @@ import {
   VideoDescription,
 } from './styledComponents'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
 class VideoItemDetails extends Component {
   state = {
+    apiStatus: apiStatusConstants.initial,
     videoDetails: {},
     isLiked: false,
     isDisLiked: false,
@@ -37,6 +48,8 @@ class VideoItemDetails extends Component {
   }
 
   getVideoDetails = async () => {
+    this.setState({ apiStatus: apiStatusConstants.inProgress })
+
     const { match } = this.props
     const { id } = match.params
 
@@ -44,6 +57,7 @@ class VideoItemDetails extends Component {
     const apiUrl = `https://apis.ccbp.in/videos/${id}`
 
     const options = {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
@@ -67,8 +81,14 @@ class VideoItemDetails extends Component {
           subscriberCount: video.channel.subscriber_count,
         },
       }
-
-      this.setState({ videoDetails: formattedData })
+      if (response.ok) {
+        this.setState({
+          videoDetails: formattedData,
+          apiStatus: apiStatusConstants.success,
+        })
+      } else {
+        this.setState({ apiStatus: apiStatusConstants.failure })
+      }
     }
   }
 
@@ -86,7 +106,13 @@ class VideoItemDetails extends Component {
     })
   }
 
-  render() {
+  renderLoadingView = () => (
+    <LoaderContainer data-testid="loader">
+      <Loader type="ThreeDots" color="#3b82f6" height={50} width={50} />
+    </LoaderContainer>
+  )
+
+  renderSuccessView = () => {
     const { videoDetails, isLiked, isDisLiked } = this.state
     const {
       title,
@@ -94,9 +120,97 @@ class VideoItemDetails extends Component {
       viewCount,
       publishedAt,
       description,
-      channel = {},
+      channel,
     } = videoDetails
 
+    return (
+      <ContentContainer>
+        <VideoPlayerContainer>
+          {videoUrl && (
+            <ReactPlayer
+              url={videoUrl}
+              controls
+              width="100%"
+              height="100%"
+              style={{ position: 'absolute', top: 0, left: 0 }}
+              playsinline
+            />
+          )}
+        </VideoPlayerContainer>
+        <VideoDetailsContainer>
+          <VideoTitle>{title}</VideoTitle>
+          <VideoStatsContainer>
+            <p>
+              {viewCount} views • {publishedAt}
+            </p>
+
+            <ActionButtons>
+              <ActionButton
+                type="button"
+                isLiked={isLiked}
+                onClick={this.handleLike}
+              >
+                <BiLike size={18} /> Like
+              </ActionButton>
+              <ActionButton
+                type="button"
+                isDisLiked={isDisLiked}
+                onClick={this.handleDisLike}
+              >
+                <BiDislike size={18} /> Dislike
+              </ActionButton>
+              <ActionButton type="button">
+                <RiPlayListAddLine size={18} /> Save
+              </ActionButton>
+            </ActionButtons>
+          </VideoStatsContainer>
+          <ChannelRow>
+            <ChannelImage src={channel.profileImageUrl} alt="channel logo" />
+            <ChannelDetails>
+              <ChannelName>{channel.name}</ChannelName>
+              <SubscribersText>
+                {channel.subscriberCount} subscribers
+              </SubscribersText>
+            </ChannelDetails>
+          </ChannelRow>
+          <VideoDescription>{description}</VideoDescription>{' '}
+        </VideoDetailsContainer>
+      </ContentContainer>
+    )
+  }
+
+  renderFailureView = () => (
+    <FailureContainer>
+      <FailureImage
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
+      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
+      <FailureDescription>
+        We are having some trouble to complete your request.
+        <br />
+        Please try again.
+      </FailureDescription>
+      <RetryButton onClick={this.getHomeVideos}>Retry</RetryButton>
+    </FailureContainer>
+  )
+
+  renderVideoDetails = () => {
+    const { apiStatus } = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      case apiStatusConstants.success:
+        return this.renderSuccessView()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      default:
+        return null
+    }
+  }
+
+  render() {
     return (
       <>
         <Header />
@@ -104,62 +218,7 @@ class VideoItemDetails extends Component {
           <SidebarContainer>
             <Sidebar />
           </SidebarContainer>
-
-          <ContentContainer>
-            <VideoPlayerContainer>
-              {videoUrl && (
-                <ReactPlayer
-                  url={videoUrl}
-                  controls
-                  width="100%"
-                  height="100%"
-                  style={{ position: 'absolute', top: 0, left: 0 }}
-                  playsinline
-                />
-              )}
-            </VideoPlayerContainer>
-            <VideoDetailsContainer>
-              <VideoTitle>{title}</VideoTitle>
-              <VideoStatsContainer>
-                <p>
-                  {viewCount} views • {publishedAt}
-                </p>
-
-                <ActionButtons>
-                  <ActionButton
-                    type="button"
-                    isLiked={isLiked}
-                    onClick={this.handleLike}
-                  >
-                    <BiLike size={18} /> Like
-                  </ActionButton>
-                  <ActionButton
-                    type="button"
-                    isDisLiked={isDisLiked}
-                    onClick={this.handleDisLike}
-                  >
-                    <BiDislike size={18} /> Dislike
-                  </ActionButton>
-                  <ActionButton type="button">
-                    <RiPlayListAddLine size={18} /> Save
-                  </ActionButton>
-                </ActionButtons>
-              </VideoStatsContainer>
-              <ChannelRow>
-                <ChannelImage
-                  src={channel.profileImageUrl}
-                  alt="channel logo"
-                />
-                <ChannelDetails>
-                  <ChannelName>{channel.name}</ChannelName>
-                  <SubscribersText>
-                    {channel.subscriberCount} subscribers
-                  </SubscribersText>
-                </ChannelDetails>
-              </ChannelRow>
-              <VideoDescription>{description}</VideoDescription>{' '}
-            </VideoDetailsContainer>
-          </ContentContainer>
+          {this.renderVideoDetails()}
         </VideoDetailsPage>
       </>
     )
