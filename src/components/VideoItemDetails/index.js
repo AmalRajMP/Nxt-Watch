@@ -26,6 +26,11 @@ import {
   ChannelName,
   SubscribersText,
   VideoDescription,
+  FailureContainer,
+  FailureImage,
+  FailureHeading,
+  FailureDescription,
+  RetryButton,
 } from './styledComponents'
 
 const apiStatusConstants = {
@@ -81,14 +86,13 @@ class VideoItemDetails extends Component {
           subscriberCount: video.channel.subscriber_count,
         },
       }
-      if (response.ok) {
-        this.setState({
-          videoDetails: formattedData,
-          apiStatus: apiStatusConstants.success,
-        })
-      } else {
-        this.setState({ apiStatus: apiStatusConstants.failure })
-      }
+
+      this.setState({
+        videoDetails: formattedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({ apiStatus: apiStatusConstants.failure })
     }
   }
 
@@ -191,7 +195,7 @@ class VideoItemDetails extends Component {
         <br />
         Please try again.
       </FailureDescription>
-      <RetryButton onClick={this.getHomeVideos}>Retry</RetryButton>
+      <RetryButton onClick={this.getVideoDetails}>Retry</RetryButton>
     </FailureContainer>
   )
 
