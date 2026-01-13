@@ -1,8 +1,9 @@
 import { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import ThemeAndVideoContext from './context/ThemeAndVideoContext'
 
-import './App.css'
+import { eachDayOfInterval, isLastDayOfMonth } from 'date-fns'
+
+import ThemeAndVideoContext from './context/ThemeAndVideoContext'
 
 import Login from './components/Login'
 import Home from './components/Home'
@@ -10,8 +11,8 @@ import Trending from './components/Trending'
 import Gaming from './components/Gaming'
 import VideoItemDetails from './components/VideoItemDetails'
 import ProtectedRoute from './components/ProtectedRoute'
-import { eachDayOfInterval, isLastDayOfMonth } from 'date-fns'
-import { preconnect } from 'react-dom'
+
+import './App.css'
 
 class App extends Component {
   state = { isLightTheme: true, savedVideosList: [] }

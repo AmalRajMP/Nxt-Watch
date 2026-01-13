@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { RiPlayListAddLine } from 'react-icons/ri'
 
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
+
 import Loader from 'react-loader-spinner'
 
 import Header from '../Header'
@@ -119,6 +121,7 @@ class VideoItemDetails extends Component {
   renderSuccessView = () => {
     const { videoDetails, isLiked, isDisLiked } = this.state
     const {
+      id,
       title,
       videoUrl,
       viewCount,
@@ -128,58 +131,75 @@ class VideoItemDetails extends Component {
     } = videoDetails
 
     return (
-      <ContentContainer>
-        <VideoPlayerContainer>
-          {videoUrl && (
-            <ReactPlayer
-              url={videoUrl}
-              controls
-              width="100%"
-              height="100%"
-              style={{ position: 'absolute', top: 0, left: 0 }}
-              playsinline
-            />
-          )}
-        </VideoPlayerContainer>
-        <VideoDetailsContainer>
-          <VideoTitle>{title}</VideoTitle>
-          <VideoStatsContainer>
-            <p>
-              {viewCount} views • {publishedAt}
-            </p>
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme, savedVideosList, addOrRemoveSavedVideo } = value
+          const isSaved = savedVideosList.find((item) => item.id === id)
 
-            <ActionButtons>
-              <ActionButton
-                type="button"
-                isLiked={isLiked}
-                onClick={this.handleLike}
-              >
-                <BiLike size={18} /> Like
-              </ActionButton>
-              <ActionButton
-                type="button"
-                isDisLiked={isDisLiked}
-                onClick={this.handleDisLike}
-              >
-                <BiDislike size={18} /> Dislike
-              </ActionButton>
-              <ActionButton type="button">
-                <RiPlayListAddLine size={18} /> Save
-              </ActionButton>
-            </ActionButtons>
-          </VideoStatsContainer>
-          <ChannelRow>
-            <ChannelImage src={channel.profileImageUrl} alt="channel logo" />
-            <ChannelDetails>
-              <ChannelName>{channel.name}</ChannelName>
-              <SubscribersText>
-                {channel.subscriberCount} subscribers
-              </SubscribersText>
-            </ChannelDetails>
-          </ChannelRow>
-          <VideoDescription>{description}</VideoDescription>{' '}
-        </VideoDetailsContainer>
-      </ContentContainer>
+          return (
+            <ContentContainer>
+              <VideoPlayerContainer>
+                {videoUrl && (
+                  <ReactPlayer
+                    url={videoUrl}
+                    controls
+                    width="100%"
+                    height="100%"
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    playsinline
+                  />
+                )}
+              </VideoPlayerContainer>
+              <VideoDetailsContainer>
+                <VideoTitle>{title}</VideoTitle>
+                <VideoStatsContainer>
+                  <p>
+                    {viewCount} views • {publishedAt}
+                  </p>
+
+                  <ActionButtons>
+                    <ActionButton
+                      type="button"
+                      isLiked={isLiked}
+                      onClick={this.handleLike}
+                    >
+                      <BiLike size={18} /> Like
+                    </ActionButton>
+                    <ActionButton
+                      type="button"
+                      isDisLiked={isDisLiked}
+                      onClick={this.handleDisLike}
+                    >
+                      <BiDislike size={18} /> Dislike
+                    </ActionButton>
+                    <ActionButton
+                      type="button"
+                      isSaved={isSaved}
+                      onClick={() => addOrRemoveSavedVideo(videoDetails)}
+                    >
+                      <RiPlayListAddLine size={18} />
+                      {isSaved ? 'Saved' : 'Save'}
+                    </ActionButton>
+                  </ActionButtons>
+                </VideoStatsContainer>
+                <ChannelRow>
+                  <ChannelImage
+                    src={channel.profileImageUrl}
+                    alt="channel logo"
+                  />
+                  <ChannelDetails>
+                    <ChannelName>{channel.name}</ChannelName>
+                    <SubscribersText>
+                      {channel.subscriberCount} subscribers
+                    </SubscribersText>
+                  </ChannelDetails>
+                </ChannelRow>
+                <VideoDescription>{description}</VideoDescription>{' '}
+              </VideoDetailsContainer>
+            </ContentContainer>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 

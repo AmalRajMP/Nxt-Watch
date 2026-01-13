@@ -124,7 +124,7 @@ export const ActionButton = styled.button`
   background: transparent;
   border: none;
   color: ${(props) =>
-    props.isLiked || props.isDisLiked ? '#4f46e5' : '#475569'};
+    props.isLiked || props.isDisLiked || props.isSaved ? '#4f46e5' : '#475569'};
   font-size: 14px;
   cursor: pointer;
 `
