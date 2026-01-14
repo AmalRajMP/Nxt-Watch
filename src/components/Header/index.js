@@ -1,4 +1,4 @@
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { FaMoon } from 'react-icons/fa'
@@ -29,10 +29,12 @@ const Header = (props) => {
 
   return (
     <Navbar>
-      <WebsiteLogo
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-        alt="website-logo"
-      />
+      <Link to="/">
+        <WebsiteLogo
+          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+          alt="website-logo"
+        />
+      </Link>
       <NavIconsWrapper>
         <ThemeToggleButton type="button">
           <ThemeToggleIcon>

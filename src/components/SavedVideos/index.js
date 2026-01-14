@@ -1,5 +1,6 @@
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 import { HiFire } from 'react-icons/hi'
+
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
 import Header from '../Header'
 import Sidebar from '../Sidebar'
