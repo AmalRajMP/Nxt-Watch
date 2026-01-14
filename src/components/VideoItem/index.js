@@ -11,27 +11,45 @@ import {
 } from './styledComponents'
 
 const VideoItem = (props) => {
-  const { videoDetails } = props
-  const { id, title, thumbnailUrl, channel, viewCount, publishedAt } =
-    videoDetails
+  const { videoDetails, horizontal = false } = props
+  const {
+    id,
+    title,
+    thumbnailUrl,
+    channel,
+    viewCount,
+    publishedAt,
+  } = videoDetails
+  console.log('horizontal prop =', horizontal)
 
   return (
-    <VideoContainer>
-      <Link to={`/videos/${id}`} style={{ textDecoration: 'none' }}>
-        <Thumbnail src={thumbnailUrl} alt="video thumbnail" />
+    <Link to={`/videos/${id}`} style={{ textDecoration: 'none' }}>
+      <VideoContainer horizontal={horizontal}>
+        <Thumbnail
+          src={thumbnailUrl}
+          alt="video thumbnail"
+          horizontal={horizontal}
+        />
 
         <VideoDetails>
-          <ChannelLogo src={channel.profileImageUrl} alt="channel logo" />
+          <ChannelLogo
+            src={channel.profileImageUrl}
+            alt="channel logo"
+            horizontal={horizontal}
+          />
 
           <TextContainer>
-            <Title>{title}</Title>
+            <Title horizontal={horizontal}>{title}</Title>
             <MetaData>
-              {channel.name} • {viewCount} views • {publishedAt}
+              <span className="channel">{channel.name}</span>
+              <span className="channel">
+                {viewCount} views • {publishedAt}
+              </span>
             </MetaData>
           </TextContainer>
         </VideoDetails>
-      </Link>
-    </VideoContainer>
+      </VideoContainer>
+    </Link>
   )
 }
 

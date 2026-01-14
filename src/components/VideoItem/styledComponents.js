@@ -3,6 +3,17 @@ import styled from 'styled-components'
 export const VideoContainer = styled.li`
   width: 100%;
   list-style-type: none;
+  display: flex;
+  flex-direction: column; /* default vertical */
+
+  ${({ horizontal }) =>
+    horizontal &&
+    `
+    @media screen and (min-width: 576px) {
+      flex-direction: row;
+      gap: 20px;
+    }
+  `}
 `
 
 export const Thumbnail = styled.img`
@@ -10,6 +21,14 @@ export const Thumbnail = styled.img`
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 8px;
+
+  ${({ horizontal }) =>
+    horizontal &&
+    `
+    @media screen and (min-width: 576px) {
+      width: 50%;
+    }
+  `}
 `
 
 export const VideoDetails = styled.div`
@@ -24,10 +43,13 @@ export const ChannelLogo = styled.img`
   border-radius: 50%;
   flex-shrink: 0;
 
-  @media screen and (max-width: 576px) {
-    width: 32px;
-    height: 32px;
-  }
+  ${({ horizontal }) =>
+    horizontal &&
+    `
+    @media screen and (min-width: 576px) {
+      display: none;
+    }
+  `}
 `
 
 export const TextContainer = styled.div`
@@ -37,22 +59,36 @@ export const TextContainer = styled.div`
 `
 
 export const Title = styled.p`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #1e293b;
   margin: 0 0 4px 0;
 
-  @media screen and (max-width: 576px) {
-    font-size: 13px;
-  }
+  ${({ horizontal }) =>
+    horizontal &&
+    `
+    @media screen and (min-width: 576px) {
+      font-size: 20px;
+    }
+  `}
 `
 
 export const MetaData = styled.p`
-  font-size: 12px;
+  font-size: 14px;
   color: #64748b;
   margin: 0;
 
-  @media screen and (max-width: 576px) {
-    font-size: 11px;
+  .channel::after {
+    content: ' • ';
+  }
+
+  @media screen and (min-width: 576px) {
+    .channel {
+      display: block;
+    }
+
+    .channel::after {
+      content: '';
+    }
   }
 `

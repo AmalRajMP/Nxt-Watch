@@ -11,6 +11,7 @@ import Trending from './components/Trending'
 import Gaming from './components/Gaming'
 import VideoItemDetails from './components/VideoItemDetails'
 import ProtectedRoute from './components/ProtectedRoute'
+import SavedVideos from './components/SavedVideos'
 
 import './App.css'
 
@@ -63,6 +64,7 @@ class App extends Component {
               component={VideoItemDetails}
             />
           </Switch>
+          <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
         </ThemeAndVideoContext.Provider>
       </>
     )

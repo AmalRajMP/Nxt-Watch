@@ -4,9 +4,9 @@ import ReactPlayer from 'react-player'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { RiPlayListAddLine } from 'react-icons/ri'
 
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
-
 import Loader from 'react-loader-spinner'
+
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
 import Header from '../Header'
 import Sidebar from '../Sidebar'
@@ -79,6 +79,7 @@ class VideoItemDetails extends Component {
         id: video.id,
         title: video.title,
         videoUrl: video.video_url,
+        thumbnailUrl: video.thumbnail_url,
         viewCount: video.view_count,
         publishedAt: video.published_at,
         description: video.description,

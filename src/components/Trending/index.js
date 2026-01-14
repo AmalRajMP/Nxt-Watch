@@ -91,7 +91,7 @@ class Trending extends Component {
     return (
       <VideosList>
         {trendingVideosList.map((eachItem) => (
-          <VideoItem key={eachItem.id} videoDetails={eachItem} />
+          <VideoItem key={eachItem.id} videoDetails={eachItem} horizontal />
         ))}
       </VideosList>
     )
