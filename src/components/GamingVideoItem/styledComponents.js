@@ -15,12 +15,12 @@ export const Title = styled.p`
   font-size: 16px;
   font-weight: 500;
   margin: 0 0 6px 0;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 `
 
 export const Views = styled.p`
   font-family: 'Roboto';
   font-size: 14px;
   margin: 0;
-  color: #64748b;
+  color: ${(props) => (props.isLightTheme ? '#64748b' : '#94a3b8')};
 `
