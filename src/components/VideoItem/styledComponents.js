@@ -4,7 +4,7 @@ export const VideoContainer = styled.li`
   width: 100%;
   list-style-type: none;
   display: flex;
-  flex-direction: column; /* default vertical */
+  flex-direction: column;
 
   ${({ horizontal }) =>
     horizontal &&
@@ -61,8 +61,8 @@ export const TextContainer = styled.div`
 export const Title = styled.p`
   font-size: 13px;
   font-weight: 500;
-  color: #1e293b;
   margin: 0 0 4px 0;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 
   ${({ horizontal }) =>
     horizontal &&
@@ -73,9 +73,9 @@ export const Title = styled.p`
   `}
 `
 
-export const MetaData = styled.p`
+export const MetaData = styled.div`
   font-size: 14px;
-  color: #64748b;
+  color: ${(props) => (props.isLightTheme ? '#64748b' : '#94a3b8')};
   margin: 0;
 
   .channel::after {
