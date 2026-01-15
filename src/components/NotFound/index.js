@@ -15,8 +15,8 @@ import {
 
 const NotFound = () => (
   <ThemeAndVideoContext.Consumer>
-    {(value) => {
-      const { isLightTheme } = value
+    {value => {
+      const {isLightTheme} = value
 
       const notFoundImg = isLightTheme
         ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-not-found-light-theme-img.png'
