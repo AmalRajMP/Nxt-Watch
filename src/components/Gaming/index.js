@@ -2,12 +2,12 @@ import { Component } from 'react'
 import Cookies from 'js-cookie'
 
 import Loader from 'react-loader-spinner'
-
 import { SiYoutubegaming } from 'react-icons/si'
 
 import Header from '../Header'
 import Sidebar from '../Sidebar'
 import GamingVideoItem from '../GamingVideoItem'
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
 import {
   GamingPage,
@@ -32,6 +32,7 @@ const apiStatusConstants = {
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
+
 class Gaming extends Component {
   state = { apiStatus: apiStatusConstants.initial, gamingVideosList: [] }
 
@@ -85,23 +86,28 @@ class Gaming extends Component {
     )
   }
 
-  renderFailureView = () => (
-    <FailureContainer>
-      <FailureImage
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure view"
-      />
-      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
-      <FailureDescription>
-        We are having some trouble to complete your request.
-        <br />
-        Please try again.
-      </FailureDescription>
-      <RetryButton onClick={this.getGamingVideos}>Retry</RetryButton>
-    </FailureContainer>
-  )
+  renderFailureView = (isLightTheme) => {
+    const failureImg = isLightTheme
+      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
 
-  renderVideosList = () => {
+    return (
+      <FailureContainer>
+        <FailureImage src={failureImg} alt="failure view" />
+        <FailureHeading isLightTheme={isLightTheme}>
+          Oops! Something Went Wrong
+        </FailureHeading>
+        <FailureDescription isLightTheme={isLightTheme}>
+          We are having some trouble to complete your request.
+          <br />
+          Please try again.
+        </FailureDescription>
+        <RetryButton onClick={this.getGamingVideos}>Retry</RetryButton>
+      </FailureContainer>
+    )
+  }
+
+  renderVideosList = (isLightTheme) => {
     const { apiStatus } = this.state
 
     switch (apiStatus) {
@@ -110,7 +116,7 @@ class Gaming extends Component {
       case apiStatusConstants.success:
         return this.renderSuccessView()
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        return this.renderFailureView(isLightTheme)
       default:
         return null
     }
@@ -118,25 +124,37 @@ class Gaming extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <GamingPage>
-          <SidebarContainer>
-            <Sidebar />
-          </SidebarContainer>
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme } = value
 
-          <ContentContainer>
-            <GamingHeader>
-              <GamingIconWrapper>
-                <SiYoutubegaming size={28} color="#ff0000" />
-              </GamingIconWrapper>
-              <GamingTitle>Gaming</GamingTitle>
-            </GamingHeader>
+          return (
+            <>
+              <Header />
+              <GamingPage>
+                <SidebarContainer>
+                  <Sidebar />
+                </SidebarContainer>
 
-            <VideosSection>{this.renderVideosList()}</VideosSection>
-          </ContentContainer>
-        </GamingPage>
-      </>
+                <ContentContainer>
+                  <GamingHeader isLightTheme={isLightTheme}>
+                    <GamingIconWrapper isLightTheme={isLightTheme}>
+                      <SiYoutubegaming size={28} color="#ff0000" />
+                    </GamingIconWrapper>
+                    <GamingTitle isLightTheme={isLightTheme}>
+                      Gaming
+                    </GamingTitle>
+                  </GamingHeader>
+
+                  <VideosSection isLightTheme={isLightTheme}>
+                    {this.renderVideosList(isLightTheme)}
+                  </VideosSection>
+                </ContentContainer>
+              </GamingPage>
+            </>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }

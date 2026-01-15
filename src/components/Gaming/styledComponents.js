@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const GamingPage = styled.div`
   min-height: 100vh;
   display: flex;
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#0f0f0f')};
 `
 
 export const SidebarContainer = styled.div`
@@ -27,11 +28,11 @@ export const GamingHeader = styled.div`
   align-items: center;
   gap: 16px;
   padding: 20px;
-  background-color: #f4f4f4;
+  background-color: ${(props) => (props.isLightTheme ? '#f4f4f4' : '#181818')};
 `
 
 export const GamingIconWrapper = styled.div`
-  background-color: #e2e8f0;
+  background-color: ${(props) => (props.isLightTheme ? '#e2e8f0' : '#0f0f0f')};
   padding: 12px;
   border-radius: 50%;
 `
@@ -40,6 +41,7 @@ export const GamingTitle = styled.h1`
   font-family: 'Roboto';
   font-size: 24px;
   margin: 0;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 `
 
 export const LoaderContainer = styled.div`
@@ -67,14 +69,14 @@ export const FailureImage = styled.img`
 export const FailureHeading = styled.h1`
   font-family: 'Roboto';
   font-size: 24px;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   margin-bottom: 8px;
 `
 
 export const FailureDescription = styled.p`
   font-family: 'Roboto';
   font-size: 14px;
-  color: #475569;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
   margin-bottom: 20px;
   line-height: 1.6;
 `
@@ -92,22 +94,19 @@ export const RetryButton = styled.button`
 `
 
 export const VideosSection = styled.div`
-  background-color: #f9f9f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
   flex-grow: 1;
 `
 
 export const VideosList = styled.ul`
   list-style-type: none;
   padding: 20px;
-
   display: grid;
   gap: 24px;
 
-  /* Mobile: 2 cards */
   grid-template-columns: repeat(2, 1fr);
 
   @media screen and (min-width: 576px) {
-    /* Tablet: 3 cards */
     grid-template-columns: repeat(3, 1fr);
   }
 
