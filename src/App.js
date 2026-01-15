@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { eachDayOfInterval, isLastDayOfMonth } from 'date-fns'
 
@@ -12,6 +12,7 @@ import Gaming from './components/Gaming'
 import VideoItemDetails from './components/VideoItemDetails'
 import ProtectedRoute from './components/ProtectedRoute'
 import SavedVideos from './components/SavedVideos'
+import NotFound from './components/NotFound'
 
 import './App.css'
 
@@ -63,8 +64,14 @@ class App extends Component {
               path="/videos/:id"
               component={VideoItemDetails}
             />
+            <ProtectedRoute
+              exact
+              path="/saved-videos"
+              component={SavedVideos}
+            />
+            <Route exact path="/not-found" component={NotFound} />
+            <Redirect to="/not-found" />
           </Switch>
-          <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
         </ThemeAndVideoContext.Provider>
       </>
     )
