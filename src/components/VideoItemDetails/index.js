@@ -73,6 +73,7 @@ class VideoItemDetails extends Component {
       const formattedData = {
         id: video.id,
         title: video.title,
+        thumbnailUrl: video.thumbnail_url, // ✅ ADD THIS LINE
         videoUrl: video.video_url,
         viewCount: video.view_count,
         publishedAt: video.published_at,

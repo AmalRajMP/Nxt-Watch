@@ -24,38 +24,43 @@ import {
 const SavedVideos = () => (
   <ThemeAndVideoContext.Consumer>
     {(value) => {
-      const { savedVideosList } = value
+      const { savedVideosList, isLightTheme } = value
       const isEmpty = savedVideosList.length === 0
+
+      const noSavedImg = isLightTheme
+        ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png'
+        : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png'
 
       return (
         <>
           <Header />
-          <SavedVideosPage>
+          <SavedVideosPage isLightTheme={isLightTheme}>
             <SidebarContainer>
               <Sidebar />
             </SidebarContainer>
 
             <ContentContainer>
-              <SavedHeader>
-                <SavedIconWrapper>
+              <SavedHeader isLightTheme={isLightTheme}>
+                <SavedIconWrapper isLightTheme={isLightTheme}>
                   <HiFire size={24} color="#ff0000" />
                 </SavedIconWrapper>
-                <SavedTitle>Saved Videos</SavedTitle>
+                <SavedTitle isLightTheme={isLightTheme}>
+                  Saved Videos
+                </SavedTitle>
               </SavedHeader>
 
               {isEmpty ? (
                 <NoSavedVideosContainer>
-                  <NoSavedImage
-                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
-                    alt="no saved videos"
-                  />
-                  <NoSavedHeading>No saved videos found</NoSavedHeading>
-                  <NoSavedText>
+                  <NoSavedImage src={noSavedImg} alt="no saved videos" />
+                  <NoSavedHeading isLightTheme={isLightTheme}>
+                    No saved videos found
+                  </NoSavedHeading>
+                  <NoSavedText isLightTheme={isLightTheme}>
                     You can save your videos while watching them
                   </NoSavedText>
                 </NoSavedVideosContainer>
               ) : (
-                <VideosSection>
+                <VideosSection isLightTheme={isLightTheme}>
                   <VideosList>
                     {savedVideosList.map((each) => (
                       <VideoItem key={each.id} videoDetails={each} horizontal />

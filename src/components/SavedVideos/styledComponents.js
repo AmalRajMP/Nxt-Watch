@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const SavedVideosPage = styled.div`
   min-height: 100vh;
   display: flex;
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#0f0f0f')};
 `
 
 export const SavedHeader = styled.div`
@@ -10,7 +11,7 @@ export const SavedHeader = styled.div`
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background-color: #f4f4f4;
+  background-color: ${(props) => (props.isLightTheme ? '#f4f4f4' : '#181818')};
 
   @media screen and (min-width: 768px) {
     gap: 16px;
@@ -19,7 +20,7 @@ export const SavedHeader = styled.div`
 `
 
 export const SavedIconWrapper = styled.div`
-  background-color: #e2e8f0;
+  background-color: ${(props) => (props.isLightTheme ? '#e2e8f0' : '#0f0f0f')};
   padding: 8px;
   border-radius: 50%;
 
@@ -31,6 +32,7 @@ export const SavedIconWrapper = styled.div`
 export const SavedTitle = styled.h1`
   font-size: 18px;
   margin: 0;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 
   @media screen and (min-width: 768px) {
     font-size: 24px;
@@ -56,7 +58,7 @@ export const ContentContainer = styled.div`
 
 export const VideosSection = styled.div`
   width: 100%;
-  background-color: #f9f9f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -70,8 +72,6 @@ export const VideosList = styled.ul`
   flex-wrap: wrap;
   gap: 24px;
 `
-
-/* Empty State */
 
 export const NoSavedVideosContainer = styled.div`
   flex: 1;
@@ -91,10 +91,10 @@ export const NoSavedImage = styled.img`
 export const NoSavedHeading = styled.h1`
   font-size: 22px;
   margin: 16px 0 8px 0;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 `
 
 export const NoSavedText = styled.p`
   font-size: 14px;
-  color: #475569;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
 `

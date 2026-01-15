@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
@@ -12,8 +12,8 @@ import {
   MetaData,
 } from './styledComponents'
 
-const VideoItem = props => {
-  const {videoDetails, horizontal = false} = props
+const VideoItem = (props) => {
+  const { videoDetails, horizontal = false } = props
   const {
     id,
     title,
@@ -25,15 +25,12 @@ const VideoItem = props => {
 
   return (
     <ThemeAndVideoContext.Consumer>
-      {value => {
-        const {isLightTheme} = value
+      {(value) => {
+        const { isLightTheme } = value
 
         return (
-          <Link to={`/videos/${id}`} style={{textDecoration: 'none'}}>
-            <VideoContainer
-              horizontal={horizontal}
-              isLightTheme={isLightTheme}
-            >
+          <Link to={`/videos/${id}`} style={{ textDecoration: 'none' }}>
+            <VideoContainer horizontal={horizontal} isLightTheme={isLightTheme}>
               <Thumbnail
                 src={thumbnailUrl}
                 alt="video thumbnail"
@@ -48,10 +45,7 @@ const VideoItem = props => {
                 />
 
                 <TextContainer>
-                  <Title
-                    horizontal={horizontal}
-                    isLightTheme={isLightTheme}
-                  >
+                  <Title horizontal={horizontal} isLightTheme={isLightTheme}>
                     {title}
                   </Title>
 
