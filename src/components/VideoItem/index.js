@@ -41,10 +41,10 @@ const VideoItem = (props) => {
           <TextContainer>
             <Title horizontal={horizontal}>{title}</Title>
             <MetaData>
-              <span className="channel">{channel.name}</span>
-              <span className="channel">
+              <p className="channel">{channel.name}</p>
+              <p className="channel">
                 {viewCount} views • {publishedAt}
-              </span>
+              </p>
             </MetaData>
           </TextContainer>
         </VideoDetails>

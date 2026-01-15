@@ -190,7 +190,7 @@ class Home extends Component {
           </SidebarContainer>
           <ContentContainer>
             {showBanner && (
-              <BannerSection>
+              <BannerSection data-testid="banner">
                 <BannerDetails>
                   <WebsiteLogo
                     src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
