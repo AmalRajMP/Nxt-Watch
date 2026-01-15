@@ -3,7 +3,9 @@ import styled from 'styled-components'
 export const HomePage = styled.div`
   min-height: 100vh;
   display: flex;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
 `
+
 export const SidebarContainer = styled.div`
   display: none;
 
@@ -18,7 +20,6 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-
   margin-top: 64px;
 `
 
@@ -45,10 +46,8 @@ export const WebsiteLogo = styled.img`
 `
 
 export const BannerText = styled.p`
-  font-family: 'Roboto';
   font-size: 16px;
   color: #231f20;
-  line-height: 1.5;
   margin-bottom: 16px;
 `
 
@@ -57,7 +56,6 @@ export const BannerButton = styled.button`
   padding: 8px 16px;
   background-color: transparent;
   border: 1px solid #231f20;
-  font-family: 'Roboto';
   font-size: 14px;
   cursor: pointer;
 `
@@ -66,14 +64,13 @@ export const CloseButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
   position: absolute;
   top: 16px;
   right: 16px;
 `
 
 export const VideosSection = styled.div`
-  background-color: #f9f9f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#181818')};
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -81,21 +78,14 @@ export const VideosSection = styled.div`
 
 export const SearchBarWrapper = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
   padding: 20px;
-
-  @media screen and (max-width: 576px) {
-    justify-content: center;
-  }
 `
 
 export const SearchContainer = styled.div`
   display: flex;
-  align-items: center;
   width: 420px;
   max-width: 100%;
-  border: 1px solid #cbd5e1;
+  border: 1px solid ${(props) => (props.isLightTheme ? '#cbd5e1' : '#424242')};
   border-radius: 4px;
   overflow: hidden;
 `
@@ -106,7 +96,8 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   font-size: 14px;
-  color: #0f172a;
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#0f0f0f')};
+  color: ${(props) => (props.isLightTheme ? '#0f172a' : '#ffffff')};
 
   &::placeholder {
     color: #94a3b8;
@@ -115,21 +106,14 @@ export const SearchInput = styled.input`
 
 export const SearchButton = styled.button`
   width: 60px;
-  background-color: #f1f5f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f1f5f9' : '#313131')};
   border: none;
-  border-left: 1px solid #cbd5e1;
-  padding: 8px 14px;
+  border-left: 1px solid
+    ${(props) => (props.isLightTheme ? '#cbd5e1' : '#424242')};
   cursor: pointer;
-  outline: none;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background-color: #e2e8f0;
-  }
+  color: ${(props) => (props.isLightTheme ? '#0f172a' : '#ffffff')};
 `
+
 export const LoaderContainer = styled.div`
   min-height: 70vh;
   display: flex;
@@ -139,10 +123,8 @@ export const LoaderContainer = styled.div`
 
 export const VideosList = styled.ul`
   list-style-type: none;
-  padding: 0;
-  margin: 24px 0 0 0;
   padding: 0 20px;
-
+  margin-top: 24px;
   display: grid;
   gap: 24px;
 
@@ -161,7 +143,6 @@ export const FailureContainer = styled.div`
   min-height: 70vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
 `
@@ -173,36 +154,30 @@ export const FailureImage = styled.img`
 `
 
 export const FailureHeading = styled.h1`
-  font-family: 'Roboto';
   font-size: 24px;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   margin-bottom: 8px;
 `
 
 export const FailureDescription = styled.p`
-  font-family: 'Roboto';
   font-size: 14px;
-  color: #475569;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
   margin-bottom: 20px;
-  line-height: 1.6;
 `
 
 export const RetryButton = styled.button`
   background-color: #4f46e5;
   color: #ffffff;
-  font-family: 'Roboto';
-  font-size: 14px;
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
   cursor: pointer;
-  outline: none;
 `
+
 export const NoSearchResultsContainer = styled.div`
   min-height: 70vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
 `
@@ -214,16 +189,13 @@ export const NoSearchResultsImage = styled.img`
 `
 
 export const NoSearchResultsHeading = styled.h1`
-  font-family: 'Roboto';
   font-size: 22px;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   margin-bottom: 8px;
 `
 
 export const NoSearchResultsDescription = styled.p`
-  font-family: 'Roboto';
   font-size: 14px;
-  color: #475569;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
   margin-bottom: 20px;
-  line-height: 1.6;
 `

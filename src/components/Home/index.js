@@ -2,9 +2,10 @@ import { Component } from 'react'
 import Cookies from 'js-cookie'
 
 import Loader from 'react-loader-spinner'
-
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
+
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
 import Header from '../Header'
 import VideoItem from '../VideoItem'
@@ -59,36 +60,29 @@ class Home extends Component {
 
   getHomeVideos = async () => {
     this.setState({ apiStatus: apiStatusConstants.inProgress })
-
     const { searchInput } = this.state
-
     const jwtToken = Cookies.get('jwt_token')
-    if (!jwtToken) {
-      return
-    }
+    if (!jwtToken) return
 
     const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
     const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
+      headers: { Authorization: `Bearer ${jwtToken}` },
     }
 
     const response = await fetch(apiUrl, options)
 
     if (response.ok) {
       const data = await response.json()
-      const formattedData = data.videos.map((eachItem) => ({
-        id: eachItem.id,
-        title: eachItem.title,
-        thumbnailUrl: eachItem.thumbnail_url,
+      const formattedData = data.videos.map((each) => ({
+        id: each.id,
+        title: each.title,
+        thumbnailUrl: each.thumbnail_url,
         channel: {
-          name: eachItem.channel.name,
-          profileImageUrl: eachItem.channel.profile_image_url,
+          name: each.channel.name,
+          profileImageUrl: each.channel.profile_image_url,
         },
-        viewCount: eachItem.view_count,
-        publishedAt: eachItem.published_at,
+        viewCount: each.view_count,
+        publishedAt: each.published_at,
       }))
 
       this.setState({
@@ -101,9 +95,7 @@ class Home extends Component {
   }
 
   onCloseBanner = () => {
-    this.setState({
-      showBanner: false,
-    })
+    this.setState({ showBanner: false })
   }
 
   onChangeSearchInput = (event) => {
@@ -120,41 +112,53 @@ class Home extends Component {
     </LoaderContainer>
   )
 
-  renderNoSearchResultsView = () => (
+  renderNoSearchResultsView = (isLightTheme) => (
     <NoSearchResultsContainer>
       <NoSearchResultsImage
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+        src={
+          isLightTheme
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-dark-theme-img.png'
+        }
         alt="no videos"
       />
-      <NoSearchResultsHeading>No Search results found</NoSearchResultsHeading>
-      <NoSearchResultsDescription>
+      <NoSearchResultsHeading isLightTheme={isLightTheme}>
+        No Search results found
+      </NoSearchResultsHeading>
+      <NoSearchResultsDescription isLightTheme={isLightTheme}>
         Try different key words or remove search filter
       </NoSearchResultsDescription>
       <RetryButton onClick={this.getHomeVideos}>Retry</RetryButton>
     </NoSearchResultsContainer>
   )
 
-  renderSuccessView = () => {
+  renderSuccessView = (isLightTheme) => {
     const { videosList } = this.state
     return videosList.length === 0 ? (
-      this.renderNoSearchResultsView()
+      this.renderNoSearchResultsView(isLightTheme)
     ) : (
       <VideosList>
-        {videosList.map((eachItem) => (
-          <VideoItem key={eachItem.id} videoDetails={eachItem} />
+        {videosList.map((each) => (
+          <VideoItem key={each.id} videoDetails={each} />
         ))}
       </VideosList>
     )
   }
 
-  renderFailureView = () => (
+  renderFailureView = (isLightTheme) => (
     <FailureContainer>
       <FailureImage
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        src={
+          isLightTheme
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+        }
         alt="failure view"
       />
-      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
-      <FailureDescription>
+      <FailureHeading isLightTheme={isLightTheme}>
+        Oops! Something Went Wrong
+      </FailureHeading>
+      <FailureDescription isLightTheme={isLightTheme}>
         We are having some trouble to complete your request.
         <br />
         Please try again.
@@ -163,16 +167,15 @@ class Home extends Component {
     </FailureContainer>
   )
 
-  renderVideosList = () => {
+  renderVideosList = (isLightTheme) => {
     const { apiStatus } = this.state
-
     switch (apiStatus) {
       case apiStatusConstants.inProgress:
         return this.renderLoadingView()
       case apiStatusConstants.success:
-        return this.renderSuccessView()
+        return this.renderSuccessView(isLightTheme)
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        return this.renderFailureView(isLightTheme)
       default:
         return null
     }
@@ -182,49 +185,69 @@ class Home extends Component {
     const { showBanner, searchInput } = this.state
 
     return (
-      <>
-        <Header />
-        <HomePage>
-          <SidebarContainer>
-            <Sidebar />
-          </SidebarContainer>
-          <ContentContainer>
-            {showBanner && (
-              <BannerSection data-testid="banner">
-                <BannerDetails>
-                  <WebsiteLogo
-                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                    alt="nxt watch logo"
-                  />
-                  <BannerText>
-                    Buy Nxt Watch Premium prepaid plans with UPI
-                  </BannerText>
-                  <BannerButton type="button">GET IT NOW</BannerButton>
-                </BannerDetails>
-                <CloseButton data-testid="close" onClick={this.onCloseBanner}>
-                  <AiOutlineClose size={20} />
-                </CloseButton>
-              </BannerSection>
-            )}
-            <VideosSection>
-              <SearchBarWrapper>
-                <SearchContainer>
-                  <SearchInput
-                    type="search"
-                    value={searchInput}
-                    placeholder="Search"
-                    onChange={this.onChangeSearchInput}
-                  />
-                  <SearchButton type="button" onClick={this.onSearchVideo}>
-                    <BsSearch />
-                  </SearchButton>
-                </SearchContainer>
-              </SearchBarWrapper>
-              {this.renderVideosList()}
-            </VideosSection>
-          </ContentContainer>
-        </HomePage>
-      </>
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme } = value
+
+          return (
+            <>
+              <Header />
+              <HomePage isLightTheme={isLightTheme}>
+                <SidebarContainer>
+                  <Sidebar />
+                </SidebarContainer>
+
+                <ContentContainer>
+                  {showBanner && (
+                    <BannerSection data-testid="banner">
+                      <BannerDetails>
+                        <WebsiteLogo
+                          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                          alt="nxt watch logo"
+                        />
+                        <BannerText>
+                          Buy Nxt Watch Premium prepaid plans with UPI
+                        </BannerText>
+                        <BannerButton type="button">GET IT NOW</BannerButton>
+                      </BannerDetails>
+
+                      <CloseButton
+                        data-testid="close"
+                        onClick={this.onCloseBanner}
+                      >
+                        <AiOutlineClose size={20} />
+                      </CloseButton>
+                    </BannerSection>
+                  )}
+
+                  <VideosSection isLightTheme={isLightTheme}>
+                    <SearchBarWrapper>
+                      <SearchContainer isLightTheme={isLightTheme}>
+                        <SearchInput
+                          type="search"
+                          value={searchInput}
+                          placeholder="Search"
+                          onChange={this.onChangeSearchInput}
+                          isLightTheme={isLightTheme}
+                        />
+                        <SearchButton
+                          type="button"
+                          onClick={this.onSearchVideo}
+                          isLightTheme={isLightTheme}
+                        >
+                          <BsSearch />
+                        </SearchButton>
+                      </SearchContainer>
+                    </SearchBarWrapper>
+
+                    {this.renderVideosList(isLightTheme)}
+                  </VideosSection>
+                </ContentContainer>
+              </HomePage>
+            </>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }
