@@ -56,21 +56,16 @@ class VideoItemDetails extends Component {
 
   getVideoDetails = async () => {
     this.setState({ apiStatus: apiStatusConstants.inProgress })
-
     const { match } = this.props
     const { id } = match.params
 
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = `https://apis.ccbp.in/videos/${id}`
 
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    }
+    const response = await fetch(apiUrl, {
+      headers: { Authorization: `Bearer ${jwtToken}` },
+    })
 
-    const response = await fetch(apiUrl, options)
     if (response.ok) {
       const data = await response.json()
       const video = data.video_details
@@ -79,7 +74,6 @@ class VideoItemDetails extends Component {
         id: video.id,
         title: video.title,
         videoUrl: video.video_url,
-        thumbnailUrl: video.thumbnail_url,
         viewCount: video.view_count,
         publishedAt: video.published_at,
         description: video.description,
@@ -100,17 +94,11 @@ class VideoItemDetails extends Component {
   }
 
   handleLike = () => {
-    this.setState({
-      isLiked: true,
-      isDisLiked: false,
-    })
+    this.setState({ isLiked: true, isDisLiked: false })
   }
 
   handleDisLike = () => {
-    this.setState({
-      isDisLiked: true,
-      isLiked: false,
-    })
+    this.setState({ isDisLiked: true, isLiked: false })
   }
 
   renderLoadingView = () => (
@@ -119,7 +107,7 @@ class VideoItemDetails extends Component {
     </LoaderContainer>
   )
 
-  renderSuccessView = () => {
+  renderSuccessView = (isLightTheme) => {
     const { videoDetails, isLiked, isDisLiked } = this.state
     const {
       id,
@@ -134,7 +122,7 @@ class VideoItemDetails extends Component {
     return (
       <ThemeAndVideoContext.Consumer>
         {(value) => {
-          const { isLightTheme, savedVideosList, addOrRemoveSavedVideo } = value
+          const { savedVideosList, addOrRemoveSavedVideo } = value
           const isSaved = savedVideosList.find((item) => item.id === id)
 
           return (
@@ -147,13 +135,14 @@ class VideoItemDetails extends Component {
                     width="100%"
                     height="100%"
                     style={{ position: 'absolute', top: 0, left: 0 }}
-                    playsinline
                   />
                 )}
               </VideoPlayerContainer>
+
               <VideoDetailsContainer>
-                <VideoTitle>{title}</VideoTitle>
-                <VideoStatsContainer>
+                <VideoTitle isLightTheme={isLightTheme}>{title}</VideoTitle>
+
+                <VideoStatsContainer isLightTheme={isLightTheme}>
                   <p>
                     {viewCount} views • {publishedAt}
                   </p>
@@ -161,21 +150,26 @@ class VideoItemDetails extends Component {
                   <ActionButtons>
                     <ActionButton
                       type="button"
-                      isLiked={isLiked}
+                      isActive={isLiked}
+                      isLightTheme={isLightTheme}
                       onClick={this.handleLike}
                     >
                       <BiLike size={18} /> Like
                     </ActionButton>
+
                     <ActionButton
                       type="button"
-                      isDisLiked={isDisLiked}
+                      isActive={isDisLiked}
+                      isLightTheme={isLightTheme}
                       onClick={this.handleDisLike}
                     >
                       <BiDislike size={18} /> Dislike
                     </ActionButton>
+
                     <ActionButton
                       type="button"
-                      isSaved={isSaved}
+                      isActive={isSaved}
+                      isLightTheme={isLightTheme}
                       onClick={() => addOrRemoveSavedVideo(videoDetails)}
                     >
                       <RiPlayListAddLine size={18} />
@@ -183,19 +177,25 @@ class VideoItemDetails extends Component {
                     </ActionButton>
                   </ActionButtons>
                 </VideoStatsContainer>
+
                 <ChannelRow>
                   <ChannelImage
                     src={channel.profileImageUrl}
                     alt="channel logo"
                   />
                   <ChannelDetails>
-                    <ChannelName>{channel.name}</ChannelName>
-                    <SubscribersText>
+                    <ChannelName isLightTheme={isLightTheme}>
+                      {channel.name}
+                    </ChannelName>
+                    <SubscribersText isLightTheme={isLightTheme}>
                       {channel.subscriberCount} subscribers
                     </SubscribersText>
                   </ChannelDetails>
                 </ChannelRow>
-                <VideoDescription>{description}</VideoDescription>{' '}
+
+                <VideoDescription isLightTheme={isLightTheme}>
+                  {description}
+                </VideoDescription>
               </VideoDetailsContainer>
             </ContentContainer>
           )
@@ -204,14 +204,20 @@ class VideoItemDetails extends Component {
     )
   }
 
-  renderFailureView = () => (
+  renderFailureView = (isLightTheme) => (
     <FailureContainer>
       <FailureImage
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        src={
+          isLightTheme
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+        }
         alt="failure view"
       />
-      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
-      <FailureDescription>
+      <FailureHeading isLightTheme={isLightTheme}>
+        Oops! Something Went Wrong
+      </FailureHeading>
+      <FailureDescription isLightTheme={isLightTheme}>
         We are having some trouble to complete your request.
         <br />
         Please try again.
@@ -220,16 +226,16 @@ class VideoItemDetails extends Component {
     </FailureContainer>
   )
 
-  renderVideoDetails = () => {
+  renderVideoDetails = (isLightTheme) => {
     const { apiStatus } = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.inProgress:
         return this.renderLoadingView()
       case apiStatusConstants.success:
-        return this.renderSuccessView()
+        return this.renderSuccessView(isLightTheme)
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        return this.renderFailureView(isLightTheme)
       default:
         return null
     }
@@ -237,15 +243,23 @@ class VideoItemDetails extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <VideoDetailsPage>
-          <SidebarContainer>
-            <Sidebar />
-          </SidebarContainer>
-          {this.renderVideoDetails()}
-        </VideoDetailsPage>
-      </>
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme } = value
+
+          return (
+            <>
+              <Header />
+              <VideoDetailsPage isLightTheme={isLightTheme}>
+                <SidebarContainer>
+                  <Sidebar />
+                </SidebarContainer>
+                {this.renderVideoDetails(isLightTheme)}
+              </VideoDetailsPage>
+            </>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }

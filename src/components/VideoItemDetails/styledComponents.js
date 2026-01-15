@@ -2,10 +2,11 @@ import styled from 'styled-components'
 
 /* Page layout */
 export const VideoDetailsPage = styled.div`
+  min-height: 100vh;
   display: flex;
   width: 100%;
   padding-top: 64px;
-  background-color: #f9f9f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
 `
 
 /* Sidebar */
@@ -77,16 +78,8 @@ export const VideoDetailsContainer = styled.div`
 export const VideoTitle = styled.p`
   font-size: 16px;
   font-weight: 500;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   line-height: 1.4;
-
-  @media screen and (min-width: 768px) {
-    font-size: 18px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    font-size: 20px;
-  }
 `
 
 /* Views + date */
@@ -95,9 +88,10 @@ export const VideoStatsContainer = styled.div`
   flex-direction: column;
   gap: 14px;
   font-size: 13px;
-  color: #64748b;
+  color: ${(props) => (props.isLightTheme ? '#64748b' : '#94a3b8')};
   margin-bottom: 12px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid
+    ${(props) => (props.isLightTheme ? '#e2e8f0' : '#313131')};
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
@@ -123,10 +117,15 @@ export const ActionButton = styled.button`
   gap: 6px;
   background: transparent;
   border: none;
-  color: ${(props) =>
-    props.isLiked || props.isDisLiked || props.isSaved ? '#4f46e5' : '#475569'};
   font-size: 14px;
   cursor: pointer;
+
+  color: ${(props) =>
+    props.isLiked || props.isDisLiked || props.isSaved
+      ? '#4f46e5'
+      : props.isLightTheme
+      ? '#475569'
+      : '#94a3b8'};
 `
 
 /* Channel info */
@@ -144,11 +143,6 @@ export const ChannelImage = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-
-  @media screen and (min-width: 768px) {
-    width: 48px;
-    height: 48px;
-  }
 `
 
 export const ChannelDetails = styled.div`
@@ -159,28 +153,19 @@ export const ChannelDetails = styled.div`
 export const ChannelName = styled.p`
   font-size: 14px;
   font-weight: 500;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   margin-bottom: 4px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 15px;
-  }
 `
 
 export const SubscribersText = styled.p`
   font-size: 12px;
-  color: #64748b;
+  color: ${(props) => (props.isLightTheme ? '#64748b' : '#94a3b8')};
 `
 
 export const VideoDescription = styled.p`
   font-size: 13px;
-  color: #475569;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
   line-height: 1.6;
-
-  @media screen and (min-width: 768px) {
-    font-size: 14px;
-    max-width: 900px;
-  }
 `
 
 export const FailureContainer = styled.div`
@@ -199,28 +184,21 @@ export const FailureImage = styled.img`
 `
 
 export const FailureHeading = styled.h1`
-  font-family: 'Roboto';
   font-size: 24px;
-  color: #1e293b;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
   margin-bottom: 8px;
 `
 
 export const FailureDescription = styled.p`
-  font-family: 'Roboto';
   font-size: 14px;
-  color: #475569;
-  margin-bottom: 20px;
-  line-height: 1.6;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
 `
 
 export const RetryButton = styled.button`
   background-color: #4f46e5;
   color: #ffffff;
-  font-family: 'Roboto';
-  font-size: 14px;
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
   cursor: pointer;
-  outline: none;
 `
