@@ -1,11 +1,12 @@
-import { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 
-import { AiFillHome } from 'react-icons/ai'
-import { HiFire } from 'react-icons/hi'
-import { SiYoutubegaming } from 'react-icons/si'
-import { MdPlaylistAdd } from 'react-icons/md'
+import {AiFillHome} from 'react-icons/ai'
+import {HiFire} from 'react-icons/hi'
+import {SiYoutubegaming} from 'react-icons/si'
+import {MdPlaylistAdd} from 'react-icons/md'
 
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 import SidebarItem from '../SidebarItem'
 
 import {
@@ -47,44 +48,56 @@ export const sidebarItemsList = [
 
 class Sidebar extends Component {
   render() {
-    const { location } = this.props
+    const {location} = this.props
     const currentPath = location.pathname
 
     return (
-      <SidebarContainer>
-        <SidebarItemsList>
-          {sidebarItemsList.map((eachItem) => (
-            <li key={eachItem.id}>
-              <SidebarItem
-                linkDetails={eachItem}
-                isActive={currentPath === eachItem.path}
-              />
-            </li>
-          ))}
-        </SidebarItemsList>
-        <ContactUsContainer>
-          <ContactTitle>CONTACT US</ContactTitle>
+      <ThemeAndVideoContext.Consumer>
+        {value => {
+          const {isLightTheme} = value
 
-          <SocialIconsContainer>
-            <SocialIcon
-              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-              alt="facebook logo"
-            />
-            <SocialIcon
-              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-              alt="twitter logo"
-            />
-            <SocialIcon
-              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-              alt="linked in logo"
-            />
-          </SocialIconsContainer>
+          return (
+            <SidebarContainer isLightTheme={isLightTheme}>
+              <SidebarItemsList>
+                {sidebarItemsList.map(eachItem => (
+                  <li key={eachItem.id}>
+                    <SidebarItem
+                      linkDetails={eachItem}
+                      isActive={currentPath === eachItem.path}
+                      isLightTheme={isLightTheme}
+                    />
+                  </li>
+                ))}
+              </SidebarItemsList>
 
-          <ContactDescription>
-            Enjoy! Now to see your channels and recommendations!
-          </ContactDescription>
-        </ContactUsContainer>
-      </SidebarContainer>
+              <ContactUsContainer>
+                <ContactTitle isLightTheme={isLightTheme}>
+                  CONTACT US
+                </ContactTitle>
+
+                <SocialIconsContainer>
+                  <SocialIcon
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+                    alt="facebook logo"
+                  />
+                  <SocialIcon
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+                    alt="twitter logo"
+                  />
+                  <SocialIcon
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+                    alt="linked in logo"
+                  />
+                </SocialIconsContainer>
+
+                <ContactDescription isLightTheme={isLightTheme}>
+                  Enjoy! Now to see your channels and recommendations!
+                </ContactDescription>
+              </ContactUsContainer>
+            </SidebarContainer>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }
