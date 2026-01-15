@@ -2,6 +2,8 @@ import { Component } from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
+
 import {
   LoginPage,
   LoginCard,
@@ -40,100 +42,102 @@ class Login extends Component {
   }
 
   onSubmitFailure = (errorMsg) => {
-    this.setState({
-      showSubmitError: true,
-      errorMsg,
-    })
+    this.setState({ showSubmitError: true, errorMsg })
   }
 
   toggleShowPassword = () => {
-    this.setState((prevState) => ({
-      showPassword: !prevState.showPassword,
-    }))
+    this.setState((prev) => ({ showPassword: !prev.showPassword }))
   }
 
   submitForm = async (event) => {
     event.preventDefault()
-
     const { username, password } = this.state
-    const userDetails = { username, password }
 
-    const apiUrl = 'https://apis.ccbp.in/login'
-    const options = {
+    const response = await fetch('https://apis.ccbp.in/login', {
       method: 'POST',
-      body: JSON.stringify(userDetails),
-    }
+      body: JSON.stringify({ username, password }),
+    })
 
-    const response = await fetch(apiUrl, options)
     const data = await response.json()
 
     if (response.ok) {
-      console.log(data.jwt_token)
       this.onSubmitSuccess(data.jwt_token)
     } else {
-      console.log('Error')
       this.onSubmitFailure(data.error_msg)
     }
   }
 
   render() {
     const jwtToken = Cookies.get('jwt_token')
-    if (jwtToken !== undefined) {
-      return <Redirect to="/" />
-    }
+    if (jwtToken !== undefined) return <Redirect to="/" />
 
-    const { username, password, showPassword, showSubmitError, errorMsg } =
-      this.state
+    const {
+      username,
+      password,
+      showPassword,
+      showSubmitError,
+      errorMsg,
+    } = this.state
 
     return (
-      <LoginPage>
-        <LoginCard>
-          <WebsiteLogo
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            alt="website logo"
-          />
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme } = value
 
-          <LoginForm onSubmit={this.submitForm}>
-            <InputSectionWrapper>
-              <LabelText htmlFor="username">USERNAME</LabelText>
-              <InputBox
-                id="username"
-                type="text"
-                value={username}
-                placeholder="Username"
-                onChange={this.onChangeUsername}
-              />
-            </InputSectionWrapper>
+          return (
+            <LoginPage isLightTheme={isLightTheme}>
+              <LoginCard isLightTheme={isLightTheme}>
+                <WebsiteLogo
+                  src={
+                    isLightTheme
+                      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+                      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+                  }
+                  alt="website logo"
+                />
 
-            <InputSectionWrapper>
-              <LabelText htmlFor="password">PASSWORD</LabelText>
-              <InputBox
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete="current-password"
-                value={password}
-                placeholder="Password"
-                onChange={this.onChangePassword}
-              />
-            </InputSectionWrapper>
+                <LoginForm onSubmit={this.submitForm}>
+                  <InputSectionWrapper>
+                    <LabelText isLightTheme={isLightTheme}>USERNAME</LabelText>
+                    <InputBox
+                      type="text"
+                      value={username}
+                      placeholder="Username"
+                      onChange={this.onChangeUsername}
+                      isLightTheme={isLightTheme}
+                    />
+                  </InputSectionWrapper>
 
-            <ShowPasswordSection>
-              <input
-                id="showPassword"
-                type="checkbox"
-                checked={showPassword}
-                onChange={this.toggleShowPassword}
-              />
-              <ShowPasswordLabelText htmlFor="showPassword">
-                Show Password
-              </ShowPasswordLabelText>
-            </ShowPasswordSection>
+                  <InputSectionWrapper>
+                    <LabelText isLightTheme={isLightTheme}>PASSWORD</LabelText>
+                    <InputBox
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      placeholder="Password"
+                      onChange={this.onChangePassword}
+                      isLightTheme={isLightTheme}
+                    />
+                  </InputSectionWrapper>
 
-            <LoginButton type="submit">Login</LoginButton>
-            {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
-          </LoginForm>
-        </LoginCard>
-      </LoginPage>
+                  <ShowPasswordSection>
+                    <input
+                      type="checkbox"
+                      checked={showPassword}
+                      onChange={this.toggleShowPassword}
+                    />
+                    <ShowPasswordLabelText isLightTheme={isLightTheme}>
+                      Show Password
+                    </ShowPasswordLabelText>
+                  </ShowPasswordSection>
+
+                  <LoginButton type="submit">Login</LoginButton>
+                  {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
+                </LoginForm>
+              </LoginCard>
+            </LoginPage>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }

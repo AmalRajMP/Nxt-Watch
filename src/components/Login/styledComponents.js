@@ -5,27 +5,28 @@ export const LoginPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#181818')};
 `
 
 export const LoginCard = styled.div`
   min-height: 300px;
   width: 350px;
-  max-width: 100%;
-  background-color: #ffffff;
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#0f0f0f')};
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
   border-radius: 15px;
   padding: 25px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: ${(props) =>
+    props.isLightTheme
+      ? '0 8px 30px rgba(0,0,0,0.12)'
+      : '0 8px 30px rgba(0,0,0,0.5)'};
 `
 
 export const WebsiteLogo = styled.img`
   height: 30px;
   width: 120px;
-  max-height: 50px;
-  max-width: 180px;
 `
 
 export const LoginForm = styled.form`
@@ -42,33 +43,32 @@ export const InputSectionWrapper = styled.div`
 `
 
 export const LabelText = styled.label`
-  color: #475569;
   font-size: 12px;
   font-weight: 500;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#ffffff')};
 `
 
 export const InputBox = styled.input`
-  height: 30px;
+  height: 36px;
   width: 100%;
-  color: #64748b;
-  font-size: 12px;
-  border: 1px solid #94a3b8;
-  padding: 12px;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid ${(props) => (props.isLightTheme ? '#94a3b8' : '#424242')};
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#0f0f0f')};
+  color: ${(props) => (props.isLightTheme ? '#64748b' : '#ffffff')};
   outline: none;
 `
 
 export const ShowPasswordSection = styled.div`
-  height: 20px;
-  width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
 `
 
 export const ShowPasswordLabelText = styled.label`
-  color: #000000;
   font-size: 14px;
   font-weight: 500;
+  color: ${(props) => (props.isLightTheme ? '#000000' : '#ffffff')};
 `
 
 export const LoginButton = styled.button`
