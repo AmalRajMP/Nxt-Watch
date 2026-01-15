@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const TrendingPage = styled.div`
   min-height: 100vh;
   display: flex;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
 `
 
 export const TrendingHeader = styled.div`
@@ -10,7 +11,7 @@ export const TrendingHeader = styled.div`
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background-color: #f4f4f4;
+  background-color: ${(props) => (props.isLightTheme ? '#f4f4f4' : '#181818')};
 
   @media screen and (min-width: 768px) {
     gap: 16px;
@@ -19,18 +20,15 @@ export const TrendingHeader = styled.div`
 `
 
 export const TrendingIconWrapper = styled.div`
-  background-color: #e2e8f0;
+  background-color: ${(props) => (props.isLightTheme ? '#e2e8f0' : '#000000')};
   padding: 8px;
   border-radius: 50%;
-
-  @media screen and (min-width: 768px) {
-    padding: 12px;
-  }
 `
 
 export const TrendingTitle = styled.h1`
   font-size: 18px;
   margin: 0;
+  color: ${(props) => (props.isLightTheme ? '#000000' : '#ffffff')};
 
   @media screen and (min-width: 768px) {
     font-size: 24px;
@@ -51,15 +49,16 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-
   margin-top: 64px;
 `
+
 export const VideosSection = styled.div`
-  background-color: #f9f9f9;
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
   flex: 1;
   display: flex;
   flex-direction: column;
 `
+
 export const LoaderContainer = styled.div`
   min-height: 70vh;
   display: flex;
@@ -72,7 +71,6 @@ export const VideosList = styled.ul`
   padding: 0;
   margin: 24px 0 0 0;
   padding: 0 20px;
-
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -94,28 +92,20 @@ export const FailureImage = styled.img`
 `
 
 export const FailureHeading = styled.h1`
-  font-family: 'Roboto';
   font-size: 24px;
-  color: #1e293b;
-  margin-bottom: 8px;
+  color: ${(props) => (props.isLightTheme ? '#1e293b' : '#ffffff')};
 `
 
 export const FailureDescription = styled.p`
-  font-family: 'Roboto';
   font-size: 14px;
-  color: #475569;
-  margin-bottom: 20px;
-  line-height: 1.6;
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
 `
 
 export const RetryButton = styled.button`
   background-color: #4f46e5;
   color: #ffffff;
-  font-family: 'Roboto';
-  font-size: 14px;
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
   cursor: pointer;
-  outline: none;
 `

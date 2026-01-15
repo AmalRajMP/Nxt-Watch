@@ -8,6 +8,8 @@ import Header from '../Header'
 import Sidebar from '../Sidebar'
 import VideoItem from '../VideoItem'
 
+import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
+
 import {
   TrendingPage,
   TrendingHeader,
@@ -98,19 +100,33 @@ class Trending extends Component {
   }
 
   renderFailureView = () => (
-    <FailureContainer>
-      <FailureImage
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure view"
-      />
-      <FailureHeading>Oops! Something Went Wrong</FailureHeading>
-      <FailureDescription>
-        We are having some trouble to complete your request.
-        <br />
-        Please try again.
-      </FailureDescription>
-      <RetryButton onClick={this.getTrendingVideos}>Retry</RetryButton>
-    </FailureContainer>
+    <ThemeAndVideoContext.Consumer>
+      {(value) => {
+        const { isLightTheme } = value
+
+        return (
+          <FailureContainer>
+            <FailureImage
+              src={
+                isLightTheme
+                  ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+                  : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+              }
+              alt="failure view"
+            />
+            <FailureHeading isLightTheme={isLightTheme}>
+              Oops! Something Went Wrong
+            </FailureHeading>
+            <FailureDescription isLightTheme={isLightTheme}>
+              We are having some trouble to complete your request.
+              <br />
+              Please try again.
+            </FailureDescription>
+            <RetryButton onClick={this.getTrendingVideos}>Retry</RetryButton>
+          </FailureContainer>
+        )
+      }}
+    </ThemeAndVideoContext.Consumer>
   )
 
   renderVideosList = () => {
@@ -130,24 +146,37 @@ class Trending extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <TrendingPage>
-          <SidebarContainer>
-            <Sidebar />
-          </SidebarContainer>
-          <ContentContainer>
-            <TrendingHeader>
-              <TrendingIconWrapper>
-                <HiFire size={24} color="#ff0000" />
-              </TrendingIconWrapper>
-              <TrendingTitle>Trending</TrendingTitle>
-            </TrendingHeader>
+      <ThemeAndVideoContext.Consumer>
+        {(value) => {
+          const { isLightTheme } = value
 
-            <VideosSection>{this.renderVideosList()}</VideosSection>
-          </ContentContainer>
-        </TrendingPage>
-      </>
+          return (
+            <>
+              <Header />
+              <TrendingPage isLightTheme={isLightTheme}>
+                <SidebarContainer>
+                  <Sidebar />
+                </SidebarContainer>
+
+                <ContentContainer>
+                  <TrendingHeader isLightTheme={isLightTheme}>
+                    <TrendingIconWrapper isLightTheme={isLightTheme}>
+                      <HiFire size={24} color="#ff0000" />
+                    </TrendingIconWrapper>
+                    <TrendingTitle isLightTheme={isLightTheme}>
+                      Trending
+                    </TrendingTitle>
+                  </TrendingHeader>
+
+                  <VideosSection isLightTheme={isLightTheme}>
+                    {this.renderVideosList()}
+                  </VideosSection>
+                </ContentContainer>
+              </TrendingPage>
+            </>
+          )
+        }}
+      </ThemeAndVideoContext.Consumer>
     )
   }
 }
