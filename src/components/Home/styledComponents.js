@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const HomePage = styled.div`
   min-height: 100vh;
-  display: flex;
   background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
 `
 
@@ -71,9 +70,9 @@ export const CloseButton = styled.button`
 
 export const VideosSection = styled.div`
   background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#181818')};
-  flex: 1;
   display: flex;
   flex-direction: column;
+  flex: 1;
 `
 
 export const SearchBarWrapper = styled.div`

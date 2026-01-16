@@ -9,8 +9,41 @@ import { FaMoon } from 'react-icons/fa'
 import { BsSun } from 'react-icons/bs'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { FiLogOut } from 'react-icons/fi'
+import { AiFillHome } from 'react-icons/ai'
+import { HiFire } from 'react-icons/hi'
+import { SiYoutubegaming } from 'react-icons/si'
+import { MdPlaylistAdd } from 'react-icons/md'
 
 import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
+
+export const sidebarItemsList = [
+  {
+    id: 'HOME',
+    path: '/',
+    label: 'Home',
+    icon: <AiFillHome />,
+  },
+  {
+    id: 'TRENDING',
+    path: '/trending',
+    label: 'Trending',
+    icon: <HiFire />,
+  },
+  {
+    id: 'GAMING',
+    path: '/gaming',
+    label: 'Gaming',
+    icon: <SiYoutubegaming />,
+  },
+  {
+    id: 'SAVED',
+    path: '/saved-videos',
+    label: 'Saved Videos',
+    icon: <MdPlaylistAdd />,
+  },
+]
+
+import SidebarItem from '../SidebarItem'
 
 import {
   Navbar,
@@ -28,6 +61,10 @@ import {
   PopupText,
   PopupButtonsContainer,
   PopupButton,
+  MobileMenuContainer,
+  CloseButton,
+  MobileMenuItems,
+  MobileMenuItemWrapper,
 } from './styledComponents'
 
 const Header = (props) => {
@@ -72,11 +109,45 @@ const Header = (props) => {
                 alt="profile"
               />
 
-              <MenuButton>
-                <MenuIcon isLightTheme={isLightTheme}>
-                  <GiHamburgerMenu />
-                </MenuIcon>
-              </MenuButton>
+              <Popup
+                modal
+                trigger={
+                  <MenuButton type="button">
+                    <MenuIcon isLightTheme={isLightTheme}>
+                      <GiHamburgerMenu />
+                    </MenuIcon>
+                  </MenuButton>
+                }
+              >
+                {(close) => (
+                  <MobileMenuContainer isLightTheme={isLightTheme}>
+                    <CloseButton
+                      type="button"
+                      onClick={close}
+                      isLightTheme={isLightTheme}
+                    >
+                      ✕
+                    </CloseButton>
+
+                    <MobileMenuItems>
+                      {sidebarItemsList.map((eachItem) => (
+                        <MobileMenuItemWrapper
+                          key={eachItem.id}
+                          onClick={close}
+                        >
+                          <SidebarItem
+                            linkDetails={eachItem}
+                            isActive={
+                              history.location.pathname === eachItem.path
+                            }
+                            isLightTheme={isLightTheme}
+                          />
+                        </MobileMenuItemWrapper>
+                      ))}
+                    </MobileMenuItems>
+                  </MobileMenuContainer>
+                )}
+              </Popup>
 
               <div className="popup-container">
                 <Popup

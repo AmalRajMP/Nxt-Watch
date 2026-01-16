@@ -140,3 +140,39 @@ export const PopupButton = styled.button`
   cursor: pointer;
   font-weight: 500;
 `
+// Mobile Menu Styling
+
+export const MobileMenuContainer = styled.div`
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#181818')};
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 24px;
+  z-index: 9999; /* above navbar */
+`
+
+export const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: ${(props) => (props.isLightTheme ? '#000000' : '#ffffff')};
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+`
+
+export const MobileMenuItems = styled.ul`
+  list-style-type: none;
+  margin-top: 80px;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+`
+
+export const MobileMenuItemWrapper = styled.li`
+  list-style-type: none;
+`
