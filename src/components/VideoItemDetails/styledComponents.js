@@ -120,12 +120,7 @@ export const ActionButton = styled.button`
   font-size: 14px;
   cursor: pointer;
 
-  color: ${(props) =>
-    props.isLiked || props.isDisLiked || props.isSaved
-      ? '#4f46e5'
-      : props.isLightTheme
-      ? '#475569'
-      : '#94a3b8'};
+  color: ${(props) => (props.isActive ? '#2563eb' : '#64748b')};
 `
 
 /* Channel info */

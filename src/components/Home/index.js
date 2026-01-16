@@ -192,7 +192,7 @@ class Home extends Component {
           return (
             <>
               <Header />
-              <HomePage isLightTheme={isLightTheme}>
+              <HomePage data-testid="home" isLightTheme={isLightTheme}>
                 <SidebarContainer>
                   <Sidebar />
                 </SidebarContainer>
@@ -234,6 +234,7 @@ class Home extends Component {
                           type="button"
                           onClick={this.onSearchVideo}
                           isLightTheme={isLightTheme}
+                          data-testid="searchButton"
                         >
                           <BsSearch />
                         </SearchButton>

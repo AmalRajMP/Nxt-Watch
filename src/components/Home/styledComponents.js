@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const HomePage = styled.div`
   min-height: 100vh;
-  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#0f0f0f')};
+  background-color: ${(props) => (props.isLightTheme ? '#f9f9f9' : '#181818')};
 `
 
 export const SidebarContainer = styled.div`

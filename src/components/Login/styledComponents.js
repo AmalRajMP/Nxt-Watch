@@ -80,6 +80,23 @@ export const LoginButton = styled.button`
   padding: 10px;
   cursor: pointer;
 `
+export const DemoCredentials = styled.div`
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.6;
+
+  background-color: ${(props) => (props.isLightTheme ? '#f1f5f9' : '#1e1e1e')};
+
+  color: ${(props) => (props.isLightTheme ? '#475569' : '#94a3b8')};
+`
+
+export const DemoHighlight = styled.span`
+  color: ${(props) => (props.isLightTheme ? '#2563eb' : '#60a5fa')};
+  font-weight: 600;
+`
 
 export const ErrorMsg = styled.p`
   color: #ff0b37;

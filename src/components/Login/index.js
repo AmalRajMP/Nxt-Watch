@@ -15,6 +15,8 @@ import {
   ShowPasswordSection,
   ShowPasswordLabelText,
   LoginButton,
+  DemoCredentials,
+  DemoHighlight,
   ErrorMsg,
 } from './styledComponents'
 
@@ -137,6 +139,18 @@ class Login extends Component {
                   </ShowPasswordSection>
 
                   <LoginButton type="submit">Login</LoginButton>
+                  <DemoCredentials isLightTheme={isLightTheme}>
+                    Demo Credentials <br />
+                    Username:
+                    <DemoHighlight isLightTheme={isLightTheme}>
+                      rahul
+                    </DemoHighlight>
+                    <br />
+                    Password:
+                    <DemoHighlight isLightTheme={isLightTheme}>
+                      rahul@2021
+                    </DemoHighlight>
+                  </DemoCredentials>
                   {showSubmitError && <ErrorMsg>{errorMsg}</ErrorMsg>}
                 </LoginForm>
               </LoginCard>

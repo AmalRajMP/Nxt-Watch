@@ -67,13 +67,15 @@ export const ProfileImg = styled.img`
   }
 `
 
-export const LogoutIconButton = styled.button`
+export const LogoutButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
 
   @media screen and (min-width: 768px) {
-    display: none;
+    border: 2px solid #3b82f6;
+    border-radius: 4px;
+    padding: 8px 10px 8px 10px;
   }
 `
 
@@ -82,21 +84,18 @@ export const LogoutIcon = styled.span`
   align-items: center;
   font-size: 20px;
   color: ${(props) => (props.isLightTheme ? '#000000' : '#ffffff')};
-`
-
-export const LogoutTextButton = styled.button`
-  display: none;
-  background-color: transparent;
-  border: 1px solid ${(props) => (props.isLightTheme ? '#3b82f6' : '#ffffff')};
-  color: ${(props) => (props.isLightTheme ? '#3b82f6' : '#ffffff')};
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 16px;
-  border-radius: 6px;
-  cursor: pointer;
 
   @media screen and (min-width: 768px) {
-    display: block;
+    display: none;
+  }
+`
+
+export const LogoutText = styled.span`
+  display: none;
+  color: #3b82f6;
+
+  @media screen and (min-width: 768px) {
+    display: inline;
   }
 `
 // Popup styling
@@ -127,12 +126,18 @@ export const PopupButtonsContainer = styled.div`
 export const PopupButton = styled.button`
   background-color: ${(props) => (props.outline ? '#3b82f6' : 'transparent')};
 
-  color: ${(props) =>
-    props.outline ? '#ffffff' : props.isLightTheme ? '#64748b' : '#cbd5e1'};
+  color: ${(props) => {
+    if (props.outline) return '#ffffff'
+    if (props.isLightTheme) return '#64748b'
+    return '#cbd5e1'
+  }};
 
   border: 1px solid
-    ${(props) =>
-      props.outline ? '#3b82f6' : props.isLightTheme ? '#64748b' : '#cbd5e1'};
+    ${(props) => {
+      if (props.outline) return '#3b82f6'
+      if (props.isLightTheme) return '#64748b'
+      return '#cbd5e1'
+    }};
 
   padding: 6px 16px;
   border-radius: 6px;
@@ -140,6 +145,7 @@ export const PopupButton = styled.button`
   cursor: pointer;
   font-weight: 500;
 `
+
 // Mobile Menu Styling
 
 export const MobileMenuContainer = styled.div`

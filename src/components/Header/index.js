@@ -16,7 +16,31 @@ import { MdPlaylistAdd } from 'react-icons/md'
 
 import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
-export const sidebarItemsList = [
+import SidebarItem from '../SidebarItem'
+
+import {
+  Navbar,
+  WebsiteLogo,
+  NavIconsWrapper,
+  ThemeToggleButton,
+  ThemeToggleIcon,
+  MenuButton,
+  ProfileImg,
+  MenuIcon,
+  LogoutButton,
+  LogoutIcon,
+  LogoutText,
+  PopupContent,
+  PopupText,
+  PopupButtonsContainer,
+  PopupButton,
+  MobileMenuContainer,
+  CloseButton,
+  MobileMenuItems,
+  MobileMenuItemWrapper,
+} from './styledComponents'
+
+const sidebarItemsList = [
   {
     id: 'HOME',
     path: '/',
@@ -42,30 +66,6 @@ export const sidebarItemsList = [
     icon: <MdPlaylistAdd />,
   },
 ]
-
-import SidebarItem from '../SidebarItem'
-
-import {
-  Navbar,
-  WebsiteLogo,
-  NavIconsWrapper,
-  ThemeToggleButton,
-  ThemeToggleIcon,
-  MenuButton,
-  ProfileImg,
-  MenuIcon,
-  LogoutIconButton,
-  LogoutIcon,
-  LogoutTextButton,
-  PopupContent,
-  PopupText,
-  PopupButtonsContainer,
-  PopupButton,
-  MobileMenuContainer,
-  CloseButton,
-  MobileMenuItems,
-  MobileMenuItemWrapper,
-} from './styledComponents'
 
 const Header = (props) => {
   const { history } = props
@@ -153,32 +153,20 @@ const Header = (props) => {
                 <Popup
                   modal
                   trigger={
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                      }}
-                    >
-                      <LogoutIconButton type="button">
-                        <LogoutIcon isLightTheme={isLightTheme}>
-                          <FiLogOut />
-                        </LogoutIcon>
-                      </LogoutIconButton>
-
-                      <LogoutTextButton
-                        type="button"
-                        isLightTheme={isLightTheme}
-                      >
+                    <LogoutButton type="button" aria-label="Logout">
+                      <LogoutIcon isLightTheme={isLightTheme}>
+                        <FiLogOut />
+                      </LogoutIcon>
+                      <LogoutText isLightTheme={isLightTheme}>
                         Logout
-                      </LogoutTextButton>
-                    </div>
+                      </LogoutText>
+                    </LogoutButton>
                   }
                 >
                   {(close) => (
                     <PopupContent isLightTheme={isLightTheme}>
                       <PopupText isLightTheme={isLightTheme}>
-                        Are you sure you want to logout?
+                        Are you sure, you want to logout
                       </PopupText>
 
                       <PopupButtonsContainer>

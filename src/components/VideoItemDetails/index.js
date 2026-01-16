@@ -95,11 +95,17 @@ class VideoItemDetails extends Component {
   }
 
   handleLike = () => {
-    this.setState({ isLiked: true, isDisLiked: false })
+    this.setState((prev) => ({
+      isLiked: !prev.isLiked,
+      isDisLiked: false,
+    }))
   }
 
   handleDisLike = () => {
-    this.setState({ isDisLiked: true, isLiked: false })
+    this.setState((prev) => ({
+      isDisLiked: !prev.isDisLiked,
+      isLiked: false,
+    }))
   }
 
   renderLoadingView = () => (
@@ -251,7 +257,10 @@ class VideoItemDetails extends Component {
           return (
             <>
               <Header />
-              <VideoDetailsPage isLightTheme={isLightTheme}>
+              <VideoDetailsPage
+                data-testid="videoItemDetails"
+                isLightTheme={isLightTheme}
+              >
                 <SidebarContainer>
                   <Sidebar />
                 </SidebarContainer>
