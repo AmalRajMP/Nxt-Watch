@@ -20,6 +20,10 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   flex-grow: 1;
   margin-top: 64px;
+
+  @media screen and (min-width: 768px) {
+    margin-left: 240px;
+  }
 `
 
 export const BannerSection = styled.div`

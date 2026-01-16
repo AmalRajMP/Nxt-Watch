@@ -98,8 +98,11 @@ class Login extends Component {
 
                 <LoginForm onSubmit={this.submitForm}>
                   <InputSectionWrapper>
-                    <LabelText isLightTheme={isLightTheme}>USERNAME</LabelText>
+                    <LabelText htmlFor="username" isLightTheme={isLightTheme}>
+                      USERNAME
+                    </LabelText>
                     <InputBox
+                      id="username"
                       type="text"
                       value={username}
                       placeholder="Username"
@@ -109,8 +112,11 @@ class Login extends Component {
                   </InputSectionWrapper>
 
                   <InputSectionWrapper>
-                    <LabelText isLightTheme={isLightTheme}>PASSWORD</LabelText>
+                    <LabelText htmlFor="password" isLightTheme={isLightTheme}>
+                      PASSWORD
+                    </LabelText>
                     <InputBox
+                      id="password"
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       placeholder="Password"
