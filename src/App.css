@@ -13,3 +13,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.popup-content {
+  width: auto !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}

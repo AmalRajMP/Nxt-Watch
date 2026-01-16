@@ -99,3 +99,44 @@ export const LogoutTextButton = styled.button`
     display: block;
   }
 `
+// Popup styling
+
+export const PopupContent = styled.div`
+  background-color: ${(props) => (props.isLightTheme ? '#ffffff' : '#212121')};
+  border-radius: 12px;
+  padding: 24px 32px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+`
+
+export const PopupText = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  color: ${(props) => (props.isLightTheme ? '#00306e' : '#ffffff')};
+`
+
+export const PopupButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+`
+
+export const PopupButton = styled.button`
+  background-color: ${(props) => (props.outline ? '#3b82f6' : 'transparent')};
+
+  color: ${(props) =>
+    props.outline ? '#ffffff' : props.isLightTheme ? '#64748b' : '#cbd5e1'};
+
+  border: 1px solid
+    ${(props) =>
+      props.outline ? '#3b82f6' : props.isLightTheme ? '#64748b' : '#cbd5e1'};
+
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+`

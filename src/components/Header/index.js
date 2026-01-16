@@ -1,6 +1,10 @@
 import { Link, withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
+import Popup from 'reactjs-popup'
+
+import 'reactjs-popup/dist/index.css'
+
 import { FaMoon } from 'react-icons/fa'
 import { BsSun } from 'react-icons/bs'
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -20,6 +24,10 @@ import {
   LogoutIconButton,
   LogoutIcon,
   LogoutTextButton,
+  PopupContent,
+  PopupText,
+  PopupButtonsContainer,
+  PopupButton,
 } from './styledComponents'
 
 const Header = (props) => {
@@ -70,19 +78,63 @@ const Header = (props) => {
                 </MenuIcon>
               </MenuButton>
 
-              <LogoutIconButton type="button" onClick={onClickLogout}>
-                <LogoutIcon isLightTheme={isLightTheme}>
-                  <FiLogOut />
-                </LogoutIcon>
-              </LogoutIconButton>
+              <div className="popup-container">
+                <Popup
+                  modal
+                  trigger={
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                      }}
+                    >
+                      <LogoutIconButton type="button">
+                        <LogoutIcon isLightTheme={isLightTheme}>
+                          <FiLogOut />
+                        </LogoutIcon>
+                      </LogoutIconButton>
 
-              <LogoutTextButton
-                type="button"
-                isLightTheme={isLightTheme}
-                onClick={onClickLogout}
-              >
-                Logout
-              </LogoutTextButton>
+                      <LogoutTextButton
+                        type="button"
+                        isLightTheme={isLightTheme}
+                      >
+                        Logout
+                      </LogoutTextButton>
+                    </div>
+                  }
+                >
+                  {(close) => (
+                    <PopupContent isLightTheme={isLightTheme}>
+                      <PopupText isLightTheme={isLightTheme}>
+                        Are you sure you want to logout?
+                      </PopupText>
+
+                      <PopupButtonsContainer>
+                        <PopupButton
+                          type="button"
+                          isLightTheme={isLightTheme}
+                          onClick={close}
+                        >
+                          Cancel
+                        </PopupButton>
+
+                        <PopupButton
+                          type="button"
+                          outline
+                          isLightTheme={isLightTheme}
+                          onClick={() => {
+                            onClickLogout()
+                            close()
+                          }}
+                        >
+                          Confirm
+                        </PopupButton>
+                      </PopupButtonsContainer>
+                    </PopupContent>
+                  )}
+                </Popup>
+              </div>
             </NavIconsWrapper>
           </Navbar>
         )
